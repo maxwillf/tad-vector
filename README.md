@@ -2,7 +2,7 @@
 An C++ Abstract Data Type implementation (alike std::vector)
 
 # Objectives
-In this project, we aim to get a similar implementation of the STL equivalent *(std::vector)[http://www.cplusplus.com/reference/vector/vector/]*.
+In this project, we aim to get a similar implementation of the STL equivalent *[std::vector](http://www.cplusplus.com/reference/vector/vector/)*.
 Just like arrays, vectors use contiguos storage locations for their elements, which means that their elements can also be acessed using offsets on regular pointers to its elements, and just as efficiently as in arrays. But unlike arrays, their size can change dynamically, with their storage being handled automatically by the container.
 
 # Compile
