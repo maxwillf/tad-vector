@@ -47,7 +47,8 @@ tad-vector: $(srcdir)/main.cpp $(OBJS)
 
 
 # Builds only the vector module
-$(objdir)/vector.o: $(srcdir)/vector.cpp $(incdir)/vector.hpp
+# $(objdir)/vector.o: $(srcdir)/vector.cpp $(incdir)/vector.hpp
+$(objdir)/vector.o: $(incdir)/vector.hpp # temporary fix
 	mkdir -p $(objdir)
 	$(CC) $(CFLAGS) -c $< -o $@
 
