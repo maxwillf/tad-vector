@@ -1,66 +1,42 @@
-# Makefile for the BDSI project "TAD-VECTOR"
+Target = vector
+INCLUDES = include
+CXX = g++
+CXXFLAGS = -std=c++11 -g -ggdb -I $(INCLUDES)
+DOCS = html latex
+SRCDIR = src
+OBJDIR = obj
 
-# Creator:
-# 	- Felipe Ramos
+SOURCES := $(wildcard $(SRCDIR)/*.cpp)
+OBJECTS := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
-# Makefile conventions
-SHELL = /bin/sh
+all: project #docs
+project: $(OBJECTS) 
+	@echo "Linkin Files: " $(OBJECTS) 
+	@$(CXX) $(OBJECTS) $(CXXFLAGS) -o $(Target)
+	@echo "Linkin complete!"
 
-# Directories
-incdir = ./include
-srcdir = ./src
-objdir = ./obj
-bindir = ./bin
-# datadir = ./data
+docs: 
+	@echo "Generating Documentation"
+	@doxygen Doxyfile
+	
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp | $(OBJDIR)
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	@echo "Sources $<" 
+	@echo "Compiling Files $< to  $@ "
+	@echo "Compiled "$<" Succesfully!"
 
-# Macros
-CC = g++
-CFLAGS = -Wall -g -ggdb -std=c++11 -I. -I$(incdir)
-RM = -rm
-OBJS = $(addprefix $(objdir)/,vector.o)
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
-# Phony targets
-.PHONY: clean cleanobj cleanbin cleansym
-.PHONY: all run main build vector
+.PHONY: clean clean_txt clean_docs clean_proj
+clean: clean_proj #clean_txt clean_docs
 
-# Use "make" to execute everything
-all: build main
+clean_proj:
+	@rm -r $(OBJDIR)
+	@rm $(Target)
+	@echo "Cleanup Complete!"
+clean_txt: $(TEXT)
+	@rm -f $(TEXT)
 
-# Use "make run" to compile and execute everything
-run: build main tad-vector
-
-# Use "make main" to compile the main
-main: tad-vector
-
-# Use "make build" to build all the modules
-build: vector
-
-# Use "make <name>" to build only the <name> module
-vector: $(objdir)/vector.o
-
-# Compiles the main
-tad-vector: $(srcdir)/main.cpp $(OBJS)
-	@mkdir -p $(bindir)
-	@$(CC) $(CFLAGS) $^ -o $(bindir)/$@
-	@ln -sFv $(bindir)/$@ $@
-	@echo "Symlink created with sucess! To execute just type ./$@\n\n"
-
-
-# Builds only the vector module
-# $(objdir)/vector.o: $(srcdir)/vector.cpp $(incdir)/vector.hpp
-$(objdir)/vector.o: $(incdir)/vector.hpp # temporary fix
-	mkdir -p $(objdir)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Removes all objects
-cleanobj:
-	$(RM) $(objdir)/*.o
-
-# Clean all executables
-cleanbin:
-	$(RM) -rf $(bindir)/*
-
-cleansym:
-	$(RM) -rf tad-vector
-
-clean: cleanobj cleanbin cleansym
+clean_docs: $(DOCS)
+	@rm -r $(DOCS)
