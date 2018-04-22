@@ -12,8 +12,8 @@ int main( void ){
 	std::cout << teste.back() << std::endl;
 	std::cout << teste.at(8) << std::endl;
 	std::cout << teste[8] << std::endl;
-	std::cout << teste.size() << std::endl;
-	std::cout << teste.capacity() << std::endl;
+	std::cout << "old size: " <<  teste.size() << std::endl;
+	std::cout << "old capacity: " << teste.capacity() << std::endl;
 	for (int i = 0; i < 9; ++i) {
 		teste.push_back(a);
 	}
@@ -21,6 +21,9 @@ int main( void ){
 	for (int i = 0; i < teste.size(); ++i) {
 		std::cout << teste[i] << std::endl;
 	}
+	std::cout << std::endl;
+	std::cout << "new size: " << teste.size() << std::endl;
+	std::cout << "new capacity: " << teste.capacity() << std::endl;
 	std::cout << "# TODO" << std::endl;
 
 	std::cout << "\n\n";

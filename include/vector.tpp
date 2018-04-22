@@ -36,9 +36,9 @@ namespace sc
 
     // capacity methods
     bool empty( void );
-    size_type size() const;
-    size_type capacity( void ) const;
-    void reserve( size_type new_cap );
+    size_type size() const; // Returns amount of the vector's initialized elements
+    size_type capacity( void ) const; // Returns amount of memory allocated for the vector
+    void reserve( size_type new_cap ); // If new_cap > capacity allocates (new_cap - capacity) bytes
 
     // modifiers methods
     void clear( void );
@@ -77,12 +77,10 @@ namespace sc
       int temp_log = log2(size);
       int int_temp_log = int(temp_log);
 
-		std::cout << "ué 0.1 " << int_temp_log << std::endl;
-		std::cout << "ué 0. 2" << temp_log << std::endl;
-        temp_capacity = pow(2,int_temp_log); /* A capacidade tem que estar sempre em expoentes de 2
-                                                como recomendado em sala de aula */
+      temp_capacity = pow(2,int_temp_log); /* A capacidade tem que estar sempre em expoentes de 2
+                                              como recomendado em sala de aula */
       if(size > temp_capacity){
-	  	temp_capacity *= 2;
+        temp_capacity *= 2;
       }
     }
     else {
@@ -97,9 +95,9 @@ namespace sc
     this->m_last = elements + size;
     this->m_size = size;
     this->m_capacity = temp_capacity;
-      if(debug) std::cout << "> Vector allocated with sucess!" << std::endl;
+    if(debug) std::cout << "> Vector allocated with sucess!" << std::endl;
 	}
-
+	
 
 	template <class T>
 	Vector<T>::~Vector( void ){
@@ -133,47 +131,59 @@ namespace sc
 
     return this->m_capacity;
   }
-	
+  /*! Allocates memory if new_cap > capacity
+    \param new_cap expected size of the array after function call
+  */
+	template <class T>
+	void Vector<T>::reserve(size_type new_cap){
+
+    if(new_cap > m_capacity){
+
+      m_capacity = new_cap;
+      T *temp_elements = new T[m_capacity];
+      std::copy(elements,m_last,temp_elements);
+      delete [] elements;
+      elements = temp_elements;
+    }
+
+	}
+
 	template <class T>
 	void Vector<T>::push_back( const T& value ){
 	
     if(m_size < m_capacity){
 
-	*m_last++ = value;
-	m_size += 1;
+      *m_last++ = value;
+      m_size += 1;
     }
 
-	else {
-	m_capacity *= 2;	
-	T *temp_elements = new T[m_capacity];
-	std::copy(elements,m_last,temp_elements);
-	delete [] elements;
-	m_size += 1;
-	m_first = temp_elements;
-	m_last = temp_elements + m_size-1;
-	*m_last++ = value;
-	elements = temp_elements;
-	}
+    else {
+      this->reserve(m_capacity*2);	
+      m_size += 1;
+      m_first = elements;
+      m_last = elements + m_size-1;
+      *m_last++ = value;
+    }
        
 
   } 
 
-    template <class T>
-      T &Vector<T>::at( size_type pos ){
-      return (this->elements[pos]);
-    }
-
-    template <class T>
-      T &Vector<T>::operator[]( size_type pos ){
-      return this->elements[pos];	
-    }
-
-    template <class T>
-      T &Vector<T>::operator=( const T &rhs ){
-      // TODO: We need to make size() functions ready
-    }
-
+  template <class T>
+  T &Vector<T>::at( size_type pos ){
+    return (this->elements[pos]);
   }
+
+  template <class T>
+  T &Vector<T>::operator[]( size_type pos ){
+    return this->elements[pos];	
+  }
+
+  template <class T>
+  T &Vector<T>::operator=( const T &rhs ){
+    // TODO: We need to make size() functions ready
+  }
+
+}
 
 
 #endif
