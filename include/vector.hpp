@@ -61,8 +61,8 @@ namespace sc
 
         // operators
         T &operator=( const T & );      // Copy content from another object
-        bool operator==( const Vector & );
-        // bool operator!=( const vector&, const vector & ); // check it
+        bool operator==( const Vector & );  // Checks if Vector1 == Vector2
+        bool operator!=( const Vector & );  // Checks if Vector1 != Vector2
         T &operator[]( size_type pos );     // Access [pos] element by doing
                                             // object[pos]
     };
@@ -192,7 +192,7 @@ namespace sc
 
     template <class T>
     bool Vector<T>::operator==( const Vector &rhs ){
-        if( *rhs.m_size != *this->m_size ){
+        if( rhs.m_size != this->m_size ){
             return false;
         } else {
             for( int i = 0; i < rhs.m_size ; i++ ){
@@ -204,6 +204,15 @@ namespace sc
         // if he ever gets to this point, they're equal
         return true;
     }
+
+    template <class T>
+        bool Vector<T>::operator!=( const Vector &rhs ){
+            if( this == rhs ){
+                return false;
+            } else {
+                return true;
+            }
+        }
 
 }
 

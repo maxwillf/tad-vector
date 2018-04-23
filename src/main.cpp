@@ -5,6 +5,8 @@ using namespace sc;
 
 int main( void ){
 	Vector<int> teste(10);
+    Vector<int> teste2(10);
+    Vector<int> teste3(10);
 
 	int a = 5;
 	std::cout << "\n\n";
@@ -36,6 +38,8 @@ int main( void ){
         std::cout << i << " ";
     }
     std::cout << std::endl;
+
+    std::cout << (teste3 == teste2 ? "São iguais" : "Não são iguais") << std::endl;
 
 	std::cout << std::endl;
 	std::cout << "new size: " << teste.size() << std::endl;
