@@ -8,10 +8,10 @@ int main( void ){
 	int a = 5;
 	std::cout << "\n\n";
 
-	std::cout << teste.front() << std::endl;
-	std::cout << teste.back() << std::endl;
-	std::cout << teste.at(8) << std::endl;
-	std::cout << teste[8] << std::endl;
+	// std::cout << teste.front() << std::endl;
+	// std::cout << teste.back() << std::endl;
+	// std::cout << teste.at(8) << std::endl;
+	// std::cout << teste[8] << std::endl;
 	std::cout << "old size: " <<  teste.size() << std::endl;
 	std::cout << "old capacity: " << teste.capacity() << std::endl;
 	for (int i = 0; i < 9; ++i) {
@@ -19,7 +19,7 @@ int main( void ){
 	}
 	std::cout << std::endl;
 	for (int i = 0; i < teste.size(); ++i) {
-		std::cout << teste[i] << std::endl;
+		std::cout << teste[i] << " ";
 	}
 	std::cout << std::endl;
 	std::cout << "new size: " << teste.size() << std::endl;
