@@ -1,10 +1,11 @@
 #include <iostream>
-#include "vector.tpp"
+#include "vector.hpp"
 
 using namespace sc;
 
 int main( void ){
 	Vector<int> teste(10);
+
 	int a = 5;
 	std::cout << "\n\n";
 
@@ -18,9 +19,24 @@ int main( void ){
 		teste.push_back(a);
 	}
 	std::cout << std::endl;
+    std::cout << "Print teste:" << std::endl;
 	for (int i = 0; i < teste.size(); ++i) {
 		std::cout << teste[i] << " ";
 	}
+    std::cout << std::endl;
+
+    std::cout << "Teste iterator" << std::endl;
+    for( auto i = teste.begin(); i != teste.end(); i++ ){
+        std::cout << *i << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Com novo for: " << std::endl;
+    for ( auto &i : teste ){
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+
 	std::cout << std::endl;
 	std::cout << "new size: " << teste.size() << std::endl;
 	std::cout << "new capacity: " << teste.capacity() << std::endl;

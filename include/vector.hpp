@@ -2,11 +2,12 @@
 #define VECTOR_HPP_
 #define debug true
 #include <iostream>
-#include <math.h>
+// #include <math.h>
+#include <cmath>
 #include <algorithm>
 /*!
  * \file vector.hpp
- * \author Felipe Ramos
+ * \author Felipe Ramos & Max William
  */
 using size_type = size_t;
 /*!
@@ -16,23 +17,22 @@ namespace sc
 {
     template <class T>
     class Vector{
-        // As funções comentadas já foram implementadas.
     private:
         T *m_first;                 // an 'first' pointer
         T *m_last;                  // an 'last' pointer
         T *elements;                // where the array will be stored
         size_type m_size = 0;       // default empty array 
-        size_type m_capacity;
+        size_type m_capacity;       // maximum capacity of the array
     public:
         // special members
         Vector( int );              // Default constructor
         ~Vector( void );            // Default destructor
 
         // iterator methods
-        T &begin();
-        T &end();
-        T &cbegin();
-        T &cend();
+        T *begin();                 // Returns a pointer to the begin
+        T *end();                   // Returns a pointer to the last stub
+        const T *cbegin();          // Returns a const pointer to the begin
+        const T *cend();            // Returns a const pointer to the last stub
 
         // capacity methods
         bool empty( void );
@@ -46,7 +46,7 @@ namespace sc
         // modifiers methods
         void clear( void );
         void push_front( const T & );
-        void push_back( const T & );
+        void push_back( const T & );    // insert an element on last position
         void pop_front( void );
         void pop_back( void );
         void insert( T & );
@@ -69,30 +69,30 @@ namespace sc
 
     // implementation
 
-    /* fazendo as mudanças necessárias para o uso de capacity */
     template <class T>
     Vector<T>::Vector( int size ){
         int temp_capacity;
         if( size > 2 ){
-            int temp_log = log2( size );
-            int int_temp_log = int( temp_log );
-            /* A capacidade tem que estar sempre em expoentes de 2 como recomendado em sala de aula */
-            temp_capacity = pow( 2, int_temp_log ); 
+            temp_capacity = pow( 2, log2(size) );     // 2 ^ x growth
             if( size > temp_capacity ){
                 temp_capacity *= 2;
             }
         } else {
             temp_capacity = size;
         }
+
         // alocating [size] elements of type T
         this->elements = new T[temp_capacity];
         for( int i = 0; i < size; i++ ){
-            elements[i] = i;        // Inicializador não padrão
+            if(debug) elements[i] = i;        // debug inicializer
+            else elements[i] = 0;     // normal inicializer
         }
+
         this->m_first = elements;
         this->m_last = elements + size;
         this->m_size = size;
         this->m_capacity = temp_capacity;
+
         if(debug) std::cout << "> Vector allocated with sucess!" << std::endl;
     }
     
@@ -103,6 +103,27 @@ namespace sc
         if(debug) std::cout << "> Vector deleted with sucess!" << std::endl;
     }
 
+    template <class T>
+    T *Vector<T>::begin( void ){
+        return this->m_first;
+    }
+
+    template <class T>
+    T *Vector<T>::end( void ){
+        return this->m_last;
+        // TODO
+    }
+
+    template <class T>
+    const T *Vector<T>::cbegin( void ){
+        return this->m_first;
+    }
+
+    template <class T>
+    const T *Vector<T>::cend( void ){
+        return this->m_last;
+    }
+    
     template <class T>
     const T &Vector<T>::front() const{
         return *(this->m_first);
@@ -143,14 +164,14 @@ namespace sc
     template <class T>
     void Vector<T>::push_back( const T& value ){
         if( m_size < m_capacity ){
-            *m_last++ = value;
+            *(m_last++) = value;
             m_size += 1;
         } else {
         this->reserve( m_capacity * 2 );    
             m_size += 1;
             m_first = elements;
-            m_last = elements + m_size-1;
-            *m_last++ = value;
+            m_last = elements + m_size - 1;
+            *(m_last++) = value;
         }
     } 
 
@@ -168,6 +189,22 @@ namespace sc
     T &Vector<T>::operator=( const T &rhs ){
         // TODO: We need to make size() functions ready
     }
+
+    template <class T>
+    bool Vector<T>::operator==( const Vector &rhs ){
+        if( *rhs.m_size != *this->m_size ){
+            return false;
+        } else {
+            for( int i = 0; i < rhs.m_size ; i++ ){
+                if( *(this->m_first+i) != *(rhs.m_first + i) ){
+                    return false;
+                }
+            }
+        }
+        // if he ever gets to this point, they're equal
+        return true;
+    }
+
 }
 
 #endif
