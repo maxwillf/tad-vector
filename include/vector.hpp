@@ -32,6 +32,15 @@ namespace sc
 
 		/* Special functions {{{*/
 		Vector( int );				// Default constructor
+
+		// TODO
+		explicit Vector( size_type count );
+		template <class InputIt>
+		Vector( InputIt first, InputIt last );
+		Vector( const Vector &other );
+		Vector( std::initializer_list<T> ilist );
+		// END OF TODO
+
 		~Vector();					// Default destructor
 		/*}}}*/
 
@@ -63,12 +72,15 @@ namespace sc
 		/* Element access functions {{{*/
 		const T &front() const;		// Acess front member (first member)
 		const T &back() const;		// Acess back member (last member)
-		T &at( size_type pos );		// Acess [pos] element at the datatype
+		T &at( size_type pos );		// TODO Acess [pos] element at the datatype
 		/*}}} */
 
 		/* Operator functions {{{*/
 		// Copy content from another object
 		Vector &operator=( const Vector & );
+
+		// TODO
+		Vector &operator=( std::initializer_list<T> ilist );
 
 		// Checks if Vector1 == Vector2
 		bool operator==( const Vector & );
