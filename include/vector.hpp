@@ -2,17 +2,20 @@
 #define VECTOR_HPP_
 #define debug true
 #include <iostream>
-// #include <math.h>
 #include <cmath>
 #include <algorithm>
+
 /*!
  * \file vector.hpp
  * \author Felipe Ramos & Max William
  */
-using size_type = size_t;
+
+using size_type = size_t; 
+
 /*!
  * \brief A class that stores all vector functions
  */
+
 namespace sc
 {
     template <class T>
@@ -60,7 +63,7 @@ namespace sc
         T &at( size_type pos );     // Acess [pos] element at the datatype
 
         // operators
-        T &operator=( const T & );      // Copy content from another object
+        Vector &operator=( const Vector & );          // Copy content from another object
         bool operator==( const Vector & );  // Checks if Vector1 == Vector2
         bool operator!=( const Vector & );  // Checks if Vector1 != Vector2
         T &operator[]( size_type pos );     // Access [pos] element by doing
@@ -99,8 +102,10 @@ namespace sc
 
     template <class T>
     Vector<T>::~Vector( void ){
-        delete[] elements;
-        if(debug) std::cout << "> Vector deleted with sucess!" << std::endl;
+        if(elements != NULL){
+            delete[] elements;
+            if(debug) std::cout << "> Vector deleted with sucess!" << std::endl;
+        }
     }
 
     template <class T>
@@ -186,8 +191,20 @@ namespace sc
     }
 
     template <class T>
-    T &Vector<T>::operator=( const T &rhs ){
-        // TODO: We need to make size() functions ready
+    Vector<T> &Vector<T>::operator=( const Vector<T> &rhs ){
+        if( this->m_size < rhs.m_size ){
+            this->reserve( rhs.m_size );
+        }
+
+        this->m_capacity = rhs.m_capacity;
+        this->m_size = rhs.m_size;
+        this->m_first = this->elements; 
+        this->m_last = this->elements + m_size;
+
+        for( int i = 0; i < rhs.m_size; i++ ){
+            this->elements[i] = rhs.elements[i];
+        }
+        return *this;
     }
 
     template <class T>
