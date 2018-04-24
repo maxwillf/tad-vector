@@ -1,5 +1,4 @@
 #include <iostream>
-// #include <time.h>
 #include <random>
 #include <chrono>
 #include "vector.hpp"
