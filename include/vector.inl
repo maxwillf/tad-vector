@@ -1,5 +1,10 @@
 #include "vector.hpp"
 
+/*!
+ * \file vector.inl
+ * \author Felipe Ramos & Max William
+ */
+
 namespace sc
 {
 	/* Special Member Block {{{*/
@@ -129,11 +134,21 @@ namespace sc
 
 	/* Operators Overloading {{{*/
 
+	/*!
+	 * \brief sc::Vector operator `[]` overload function
+	 * \param size_type pos : The desired position to access in elements[pos].
+	 * \return The element at elements[pos].
+	 */
 	template <class T>
 	T &Vector<T>::operator[]( size_type pos ){
 		return this->elements[pos]; 
 	}
 
+	/*!
+	 * \brief	sc::Vector operator `=` overload function
+	 * \param	const Vector<T> &rhs : Right hand side object
+	 * \return	The right hand side object
+	 */
 	template <class T>
 	Vector<T> &Vector<T>::operator=( const Vector<T> &rhs ){
 		if( this->m_size < rhs.m_size ){
@@ -151,6 +166,12 @@ namespace sc
 		return *this;
 	}
 
+	/*!
+	 * \brief	sc::Vector operator `==` overload function
+	 * \param	const Vector<T> &rhs : Right hand side object
+	 * \return	bool value if the two objects are equal.
+	 * (true = 1, false = 0)
+	 */
 	template <class T>
 	bool Vector<T>::operator==( const Vector &rhs ){
 		if( rhs.m_size != this->m_size ){
@@ -166,6 +187,12 @@ namespace sc
 		return true;
 	}
 
+	/*!
+	 * \brief	sc::Vector operator `!=` overload function
+	 * \param	const Vector<T> &rhs : Right hand side object
+	 * \return	bool value if the two objects are unequal.
+	 * (true = 1, false = 0)
+	 */
 	template <class T>
 	bool Vector<T>::operator!=( const Vector &rhs ){
 		if( this == rhs ){
@@ -185,6 +212,7 @@ namespace sc
 	template <class T>
 	typename Vector<T>::iterator Vector<T>::begin(){
 		return Vector<T>::iterator(this->m_first);
+		// return Vector<T>::iterator(this->m_first);
 	}
 
 	/*!
@@ -193,7 +221,8 @@ namespace sc
 	 */
 	template <class T>
 	typename Vector<T>::iterator Vector<T>::end(){
-		return this->m_last;
+		return Vector<T>::iterator(this->m_last);
+		// return Vector<T>::iterator(this->m_last);
 	}
 
 	/*!
@@ -202,7 +231,7 @@ namespace sc
 	 */
 	template <class T>
 	typename Vector<T>::iterator Vector<T>::cbegin() const{
-		return this->m_first;
+		return Vector<T>::iterator(this->m_first);
 	}
 
 	/*!
@@ -211,24 +240,112 @@ namespace sc
 	 */
 	template <class T>
 	typename Vector<T>::iterator Vector<T>::cend() const{
-		return this->m_last;
+		return Vector<T>::iterator(this->m_last);
 	}
 	/*}}}*/
 
 	/* Iterator Implementation {{{*/
 
+	/*!
+	 * \brief default iterator class constructor
+	 * \param T *ptr : A pointer from any type that will be stored inside the
+	 * iterator.
+	 */
 	template <class T>
 	Vector<T>::iterator::iterator( T *ptr ){
 		this->m_ptr = ptr;
 	}
 
-	template <class T>
-	Vector<T>::iterator::~iterator() = default;
-
-	template <class T>
-	Vector<T>::iterator::iterator( const iterator &itr ){
-		this->m_ptr( itr.m_ptr );
+	/*!
+	 * \brief Alternative constructor, that recieves another iterator.
+	 * \param const Vector<U>::iterator &itr : Another iterator from Vector<U>.
+	 */
+	template <class U>
+	Vector<U>::iterator::iterator( const Vector<U>::iterator &itr ){
+		this->m_ptr = itr.m_ptr;
+		std::cout << "Vector<U>::iterator::iterator( itr ) created.\n";
 	}
-	
+
+	/*!
+	 * \brief Default iterator destructor
+	 */
+	template <class U>
+	Vector<U>::iterator::~iterator() = default;
+
+	/*!
+	 * \brief Operator `=` overload function
+	 * \param const Vector::iterator &rhs : Right hand side of the `=` sign.
+	 */
+	template <class T>
+	typename Vector<T>::iterator &Vector<T>::iterator::operator=(
+			const Vector::iterator &rhs )
+	{
+		this->m_ptr = rhs.m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `==` overload function
+	 * \param const Vector::iterator &rhs : Right hand side of the `==` sign.
+	 */
+	template <class T>
+	bool Vector<T>::iterator::operator==( const Vector::iterator &rhs ) const{
+		return this->m_ptr == rhs.m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `!=` overload function
+	 * \param const Vector::iterator &rhs : Right hand side of the `!=` sign.
+	 */
+	template <class T>
+	bool Vector<T>::iterator::operator!=( const Vector::iterator &rhs ) const{
+		return this->m_ptr != rhs.m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `*` overload function
+	 */
+	template <class T>
+	T &Vector<T>::iterator::operator*( void ) const{
+		return *this->m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `++` overload function
+	 */
+	template <class T>
+	typename Vector<T>::iterator Vector<T>::iterator::operator++( void ){
+		// ++it
+		return ++this->m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `++` overload function
+	 * \param int : The object itself
+	 */
+	template <class T>
+	typename Vector<T>::iterator Vector<T>::iterator::operator++( int ){
+		// it++
+		return this->m_ptr++;
+	}
+
+	/*!
+	 * \brief Operator `--` overload function
+	 */
+	template <class T>
+	typename Vector<T>::iterator Vector<T>::iterator::operator--( void ){
+		// --it
+		return --this->m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `--` overload function
+	 * \param int : The object itself
+	 */
+	template <class T>
+	typename Vector<T>::iterator Vector<T>::iterator::operator--( int ){
+		// it--
+		return this->m_ptr--;
+	}
+
 	/*}}}*/
 }

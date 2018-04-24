@@ -7,20 +7,21 @@ using namespace sc;
 
 // Debugging function
 template <class T>
-void printArray( T *first, T *last, char sep ){
-    for( T *i = first; i < last; i++ ){
-        std::cout << *i << sep;
-    }
+void printArray( Vector<T> &V, char sep ){
+	for( auto it = V.begin(); it != V.end(); ++it ){
+		std::cout << *it << sep;
+	}
     std::cout << std::endl;
 }
 
 template <class T>
 void populate( Vector<T> &V ){
-    for( T *i = V.begin(); i < V.end(); i++ ){
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        std::mt19937 rd (seed);
-        *i = rd() % 99 + 9;
-    }
+	for( auto it = V.begin(); it != V.end(); ++it ){
+		unsigned seed;
+		seed = std::chrono::system_clock::now().time_since_epoch().count();
+		std::mt19937 rd (seed);
+		*it = rd() % 99 + 9;
+	}
 }
 
 int main( void ){
@@ -32,12 +33,13 @@ int main( void ){
     populate(teste);
     populate(teste2);
 
+
     // just a pretty print
     std::cout << "\n\n";
 
     std::cout << "Antes:\n";
-    printArray( teste.begin(), teste.end(), ' ' );
-    printArray( teste2.begin(), teste2.end(), ' ' );
+	printArray( teste, ' ' );
+	printArray( teste2, ' ' );
 
     // operations stay here
 
@@ -47,8 +49,8 @@ int main( void ){
     // end of operations space
 
     std::cout << "Depois:\n";
-    printArray( teste.begin(), teste.end(), ' ' );
-    printArray( teste2.begin(), teste2.end(), ' ' );
+	printArray( teste, ' ' );
+	printArray( teste2, ' ' );
 
 	std::cout << "\n\n";
 

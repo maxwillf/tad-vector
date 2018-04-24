@@ -11,6 +11,7 @@ CXXFLAGS = -std=c++11 -g -ggdb -I $(INCLUDES)
 DOCS = html latex
 SRCDIR = src
 OBJDIR = obj
+BINDIR = bin
 
 SOURCES := $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
@@ -19,8 +20,10 @@ all: project #docs
 
 project: $(OBJECTS) $(HEADERS)
 	@echo "> LINKIN FILES: " $(OBJECTS) 
-	@$(CXX) $(OBJECTS) $(CXXFLAGS) -o $(Target)
+	@$(CXX) $(OBJECTS) $(CXXFLAGS) -o $(BINDIR)/$(Target)
 	@echo "> LINKIN COMPLETE!"
+	@echo "Link created on:"
+	@ln -sFv $(BINDIR)/$(Target) $(Target) # Creates a link to the root
 
 docs: 
 	@echo "> GENERATING DOCUMENTATION"
@@ -40,6 +43,7 @@ clean: clean_proj #clean_txt clean_docs
 
 clean_proj:
 	@rm -r $(OBJDIR)
+	@rm $(BINDIR)/$(Target)
 	@rm $(Target)
 	@echo "> CLEANUP DONE!"
 clean_txt: $(TEXT)
