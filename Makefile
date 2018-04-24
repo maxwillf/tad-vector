@@ -1,3 +1,8 @@
+# Makefile for the Basic Structure Data I Projet "TAD-VECTOR"
+#
+# Made by Max William, minor changes by Felipe Ramos
+
+# Conventions
 Target = vector
 INCLUDES = include
 HEADERS = $(wildcard $(INCLUDES)/*)
@@ -11,20 +16,21 @@ SOURCES := $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
 all: project #docs
+
 project: $(OBJECTS) $(HEADERS)
-	@echo "Linkin Files: " $(OBJECTS) 
+	@echo "> LINKIN FILES: " $(OBJECTS) 
 	@$(CXX) $(OBJECTS) $(CXXFLAGS) -o $(Target)
-	@echo "Linkin complete!"
+	@echo "> LINKIN COMPLETE!"
 
 docs: 
-	@echo "Generating Documentation"
+	@echo "> GENERATING DOCUMENTATION"
 	@doxygen Doxyfile
 	
 $(OBJECTS):	$(OBJDIR)/%.o : $(SRCDIR)/%.cpp $(HEADERS) | $(OBJDIR)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
-	@echo "Sources $<" 
-	@echo "Compiling Files $< to  $@ "
-	@echo "Compiled "$<" Succesfully!"
+	@echo "> SOURCES $<" 
+	@echo "> COMPILING FILES $< TO  $@ "
+	@echo "> COMPILED "$<" SUCCESFULLY!"
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
@@ -35,7 +41,7 @@ clean: clean_proj #clean_txt clean_docs
 clean_proj:
 	@rm -r $(OBJDIR)
 	@rm $(Target)
-	@echo "Cleanup Complete!"
+	@echo "> CLEANUP DONE!"
 clean_txt: $(TEXT)
 	@rm -f $(TEXT)
 

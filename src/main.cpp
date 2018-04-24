@@ -1,42 +1,55 @@
 #include <iostream>
+// #include <time.h>
+#include <random>
+#include <chrono>
 #include "vector.hpp"
 
 using namespace sc;
 
+// Debugging function
+template <class T>
+void printArray( T *first, T *last, char sep ){
+    for( T *i = first; i < last; i++ ){
+        std::cout << *i << sep;
+    }
+    std::cout << std::endl;
+}
+
+template <class T>
+void populate( Vector<T> &V ){
+    for( T *i = V.begin(); i < V.end(); i++ ){
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::mt19937 rd (seed);
+        *i = rd() % 99 + 9;
+    }
+}
+
 int main( void ){
+    // declaration
 	Vector<int> teste(10);
     Vector<int> teste2(25);
-    // Vector<int> teste3(10);
 
-	// int a = 5;
+    // generate pseudo-random numbers and populate the vectors
+    populate(teste);
+    populate(teste2);
+
+    // just a pretty print
     std::cout << "\n\n";
 
     std::cout << "Antes:\n";
-    for ( auto &i : teste ){
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
-    for ( auto &i : teste2 ){
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
+    printArray( teste.begin(), teste.end(), ' ' );
+    printArray( teste2.begin(), teste2.end(), ' ' );
 
-    teste2[15] = 9109;
+    // operations stay here
 
-    // operator=();
     teste = teste2;
+    // teste2 = teste;
+
+    // end of operations space
 
     std::cout << "Depois:\n";
-    std::cout << &teste << std::endl;
-    for ( auto &i : teste ){
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
-    std::cout << &teste2 << std::endl;
-    for ( auto &i : teste2 ){
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
+    printArray( teste.begin(), teste.end(), ' ' );
+    printArray( teste2.begin(), teste2.end(), ' ' );
 
 	std::cout << "\n\n";
 
