@@ -85,18 +85,46 @@ namespace sc
 
 	template <class T>
 	void Vector<T>::push_back( const T& value ){
-		if( m_size < m_capacity ){
-			*(m_last++) = value;
+		if(m_size <= 2){
+			this->reserve(2);
 			m_size += 1;
-		} else {
-		this->reserve( m_capacity * 2 );	
-			m_size += 1;
-			m_first = elements;
 			m_last = elements + m_size - 1;
 			*(m_last++) = value;
 		}
-	} 
+		
+		else if( m_size < m_capacity ){
+			*(m_last++) = value;
+			m_size += 1;
+		} 
+		else {
+			
+			this->reserve( m_capacity * 2 );	
+			m_size += 1;
+			m_last = elements + m_size - 1;
+			*(m_last++) = value;
+		}
+	}
+	/*! Removes all elements from the vector but leaves capacity unchanged*/
+	template <typename T>
+	void Vector<T>::clear(void){
+		delete [] elements;
+		elements = new T[m_capacity];
+		m_size = 0;
+		m_first = elements;
+		m_last = elements;
+	}
+	/*! Shrinks capacity in relation to the actual size of the vector */
+	template <typename T>
+	void Vector<T>::shrink_to_fit(void){
 
+			m_capacity = pow(2,log2(m_size)+1);
+			T *temp_elements = new T[m_capacity];
+			std::copy(elements,elements+size,temp_elements);
+			delete [] elements;
+			elements = temp_elements;
+			m_first = elements;
+			m_last = elements+size;
+	}
 	/*}}}*/
 
 	/* Elements Access Methods {{{*/
@@ -140,7 +168,8 @@ namespace sc
 	 * \return The element at elements[pos].
 	 */
 	template <class T>
-	T &Vector<T>::operator[]( size_type pos ){
+	T& Vector<T>::operator[]( size_type pos ){
+
 		return this->elements[pos]; 
 	}
 
@@ -348,4 +377,12 @@ namespace sc
 	}
 
 	/*}}}*/
+	
+	
+/*	template <typename T>
+	iterator Vector<T>::erase(iterator pos){
+		
+		std::copy(pos,elements+m_size,pos-1);
+		m_size -= 1;
+	} */
 }

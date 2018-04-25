@@ -66,7 +66,7 @@ namespace sc
 		void insert( T & );
 		void shrink_to_fit();
 		void assign( const T & );
-		void erase();
+	//	iterator erase(iterator pos);
 		/* }}} */
 
 		/* Element access functions {{{*/

@@ -18,12 +18,12 @@ OBJECTS := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
 all: project #docs
 
-project: $(OBJECTS) $(HEADERS)
+project: $(OBJECTS) $(HEADERS) | $(BINDIR)
 	@echo "> LINKIN FILES: " $(OBJECTS) 
 	@$(CXX) $(OBJECTS) $(CXXFLAGS) -o $(BINDIR)/$(Target)
 	@echo "> LINKIN COMPLETE!"
 	@echo "Link created on:"
-	@ln -sFv $(BINDIR)/$(Target) $(Target) # Creates a link to the root
+	@ln -sfv $(BINDIR)/$(Target) $(Target) # Creates a link to the root
 
 docs: 
 	@echo "> GENERATING DOCUMENTATION"
@@ -37,6 +37,9 @@ $(OBJECTS):	$(OBJDIR)/%.o : $(SRCDIR)/%.cpp $(HEADERS) | $(OBJDIR)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+
+$(BINDIR):
+	mkdir -p $(BINDIR)
 
 .PHONY: clean clean_txt clean_docs clean_proj
 clean: clean_proj #clean_txt clean_docs

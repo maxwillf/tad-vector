@@ -28,7 +28,6 @@ int main( void ){
     // declaration
 	Vector<int> teste(10);
     Vector<int> teste2(25);
-
     // generate pseudo-random numbers and populate the vectors
     populate(teste);
     populate(teste2);
@@ -50,9 +49,16 @@ int main( void ){
 
     std::cout << "Depois:\n";
 	printArray( teste, ' ' );
+//	teste.erase(teste.begin());
+	printArray( teste, ' ' );
 	printArray( teste2, ' ' );
 
 	std::cout << "\n\n";
-
+	teste2.clear();
+	printArray(teste2, ' ');
+	teste2.push_back(1);
+	std::cout << "size before " << teste2.size() << std::endl;
+	printArray(teste2, ' ');
+	std::cout << "size after " << teste2.size() << std::endl ;
 	return 0;
 }
