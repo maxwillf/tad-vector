@@ -18,9 +18,52 @@ using size_type = size_t;
 
 namespace sc
 {
+
+
 	template <class T>
 	class Vector{
-	private:
+	public:
+		/* Class Iterator {{{*/
+		class iterator{
+			public:
+				/* Public Code {{{*/
+				typedef std::ptrdiff_t difference_type;
+				typedef std::bidirectional_iterator_tag iterator_category;
+
+				// constructors
+				iterator( T* ptr=nullptr );
+				iterator( const iterator & );
+
+				// destructors
+				~iterator( void );
+				
+				// operators 
+				iterator &operator=( const iterator & );
+				T &operator*( void ) const;
+
+				iterator operator++( void );	// ++it
+				iterator operator++( int );		// it++
+				iterator operator--( void );	// --it
+				iterator operator--( int );		// it--
+//
+				bool operator==( const iterator & ) const;
+				bool operator!=( const iterator & ) const;
+				
+				/*}}}*/
+			private:
+				/* Private Code {{{*/
+				T *m_ptr;
+				/*}}}*/
+		};
+		/*}}}*/
+		
+		/* Iterator methods {{{*/
+		typename Vector<T>::iterator begin();
+		typename Vector<T>::iterator end();
+		typename Vector<T>::iterator cbegin() const;
+		typename Vector<T>::iterator cend() const;
+		/*}}}*/
+		private:
 
 		T *m_first;					// an 'first' pointer
 		T *m_last;					// an 'last' pointer
@@ -66,7 +109,7 @@ namespace sc
 		void insert( T & );
 		void shrink_to_fit();
 		void assign( const T & );
-	//	iterator erase(iterator pos);
+		iterator erase(iterator pos);
 		/* }}} */
 
 		/* Element access functions {{{*/
@@ -92,46 +135,6 @@ namespace sc
 		T &operator[]( size_type );	 		
 		/*}}}*/
 
-		/* Class Iterator {{{*/
-		class iterator{
-			public:
-				/* Public Code {{{*/
-				typedef std::ptrdiff_t difference_type;
-				typedef std::bidirectional_iterator_tag iterator_category;
-
-				// constructors
-				iterator( T* ptr=nullptr );
-				iterator( const iterator & );
-
-				// destructors
-				~iterator( void );
-				
-				// operators 
-				iterator &operator=( const iterator & );
-				T &operator*( void ) const;
-
-				iterator operator++( void );	// ++it
-				iterator operator++( int );		// it++
-				iterator operator--( void );	// --it
-				iterator operator--( int );		// it--
-//
-				bool operator==( const iterator & ) const;
-				bool operator!=( const iterator & ) const;
-				
-				/*}}}*/
-			private:
-				/* Private Code {{{*/
-				T *m_ptr;
-				/*}}}*/
-		};
-		/*}}}*/
-
-		/* Iterator methods {{{*/
-		typename Vector<T>::iterator begin();
-		typename Vector<T>::iterator end();
-		typename Vector<T>::iterator cbegin() const;
-		typename Vector<T>::iterator cend() const;
-		/*}}}*/
 
 	};
 

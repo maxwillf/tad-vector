@@ -125,6 +125,12 @@ namespace sc
 			m_first = elements;
 			m_last = elements+size;
 	}
+	template <typename T>
+	typename Vector<T>::iterator Vector<T>::erase(iterator pos){
+		
+		std::copy(pos,elements+m_size,pos-1);
+		m_size -= 1;
+	} 
 	/*}}}*/
 
 	/* Elements Access Methods {{{*/
@@ -379,10 +385,5 @@ namespace sc
 	/*}}}*/
 	
 	
-/*	template <typename T>
-	iterator Vector<T>::erase(iterator pos){
-		
-		std::copy(pos,elements+m_size,pos-1);
-		m_size -= 1;
-	} */
+
 }
