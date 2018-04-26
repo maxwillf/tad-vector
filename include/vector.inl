@@ -65,6 +65,35 @@ namespace sc
 		this->m_size = other.size();
 		this->m_capacity = temp_capacity;
 	}
+
+	/*!
+	 * \brief Initializer_list constructor
+	 * \param std::initializer_list<T> ilist : Bracket initializer
+	 */
+	template <class T>
+	Vector<T>::Vector( std::initializer_list<T> ilist ){
+	int temp_capacity;			
+		if( ilist.size() > 2 ){
+			temp_capacity = pow( 2, int(log2(ilist.size())) );					
+
+			if( ilist.size() > temp_capacity ){
+				temp_capacity *= 2;		
+			}
+		} else {
+			temp_capacity = ilist.size();	
+		}
+
+		this->elements = new T[temp_capacity];
+		int buf = 0;
+		for( auto *i = ilist.begin(); i < ilist.end(); i++, buf++ ){
+			elements[buf] = *i;
+		}
+		this->m_first = elements;
+		this->m_last = elements + ilist.size();
+		this->m_size = ilist.size();
+		this->m_capacity = temp_capacity;
+	}
+	
  
 	/*!
 	 * \brief Default destructor

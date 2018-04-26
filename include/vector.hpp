@@ -84,7 +84,7 @@ namespace sc
 		explicit Vector( size_type count );
 		template <class InputIt>
 		Vector( InputIt first, InputIt last );
-		Vector( const Vector &other );		// Makes a deep copy of &other
+		Vector( const Vector &other );			// Makes a deep copy of &other
 		Vector( std::initializer_list<T> ilist );
 		// END OF TODO
 

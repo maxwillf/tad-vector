@@ -28,6 +28,7 @@ int main( void ){
     // declaration
 	Vector<int> teste(10);
     Vector<int> teste2(25);
+	Vector<int> testeCopy = { 10, 20, 30, 45, 50, 60, 94, 98, 105, 17 };
     // generate pseudo-random numbers and populate the vectors
     populate(teste);
     populate(teste2);
@@ -42,7 +43,7 @@ int main( void ){
 
     // operations stay here
 
-	Vector<int> testeCopy(teste);
+	// Vector<int> testeCopy(teste);
     teste = teste2;
     // teste2 = teste;
 
