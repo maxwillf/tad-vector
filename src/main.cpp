@@ -49,7 +49,7 @@ int main( void ){
 
     std::cout << "Depois:\n";
 	printArray( teste, ' ' );
-//	teste.erase(teste.begin());
+// fix it 	teste.erase(teste.begin());
 	printArray( teste, ' ' );
 	printArray( teste2, ' ' );
 

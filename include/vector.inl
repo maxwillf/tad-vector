@@ -127,8 +127,8 @@ namespace sc
 	}
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::erase(iterator pos){
-		
-		std::copy(pos,elements+m_size,pos-1);
+//fix it		
+		std::copy(pos,elements+m_size,--pos);
 		m_size -= 1;
 	} 
 	/*}}}*/
