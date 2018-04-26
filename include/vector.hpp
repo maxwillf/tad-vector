@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
-
+#include <iterator> //for std::distance
 /*!
  * \file vector.hpp
  * \author Felipe Ramos & Max William
@@ -45,9 +45,13 @@ namespace sc
 				iterator operator++( int );		// it++
 				iterator operator--( void );	// --it
 				iterator operator--( int );		// it--
+				iterator operator-(int a ); // ptr-int
+				iterator operator+(int a ); // ptr+int
 //
 				bool operator==( const iterator & ) const;
 				bool operator!=( const iterator & ) const;
+	
+				int operator-(iterator rhs ); // ptr_diff
 				
 				/*}}}*/
 			private:
@@ -101,15 +105,19 @@ namespace sc
 		/*}}}*/
 
 		/* Modifiers functions {{{*/
+		/*! Deletes all elements from the vector */
 		void clear();
 		void push_front( const T & );
 		void push_back( const T & );	// insert an element on last position
 		void pop_front();
 		void pop_back();
 		void insert( T & );
+		/*! Reduces Capacity according to the vector actual size */
 		void shrink_to_fit();
 		void assign( const T & );
-		iterator erase(iterator pos);
+		iterator erase(iterator pos); // Deletes element in position pos
+		/*! Deletes elements in [first,last) */
+		iterator erase(iterator first,iterator last);
 		/* }}} */
 
 		/* Element access functions {{{*/

@@ -17,7 +17,7 @@ namespace sc
 	Vector<T>::Vector( int size ){
 		int temp_capacity;
 		if( size > 2 ){
-			temp_capacity = pow( 2, log2(size) );	 // 2 ^ x growth
+			temp_capacity = pow( 2, int(log2(size)) );	 // 2 ^ x growth
 			if( size > temp_capacity ){
 				temp_capacity *= 2;
 			}
@@ -107,8 +107,6 @@ namespace sc
 	/*! Removes all elements from the vector but leaves capacity unchanged*/
 	template <typename T>
 	void Vector<T>::clear(void){
-		delete [] elements;
-		elements = new T[m_capacity];
 		m_size = 0;
 		m_first = elements;
 		m_last = elements;
@@ -117,19 +115,42 @@ namespace sc
 	template <typename T>
 	void Vector<T>::shrink_to_fit(void){
 
-			m_capacity = pow(2,log2(m_size)+1);
+			m_capacity = pow(2,int(log2(m_size))+1);
 			T *temp_elements = new T[m_capacity];
-			std::copy(elements,elements+size,temp_elements);
+			std::copy(elements,elements+m_size,temp_elements);
 			delete [] elements;
 			elements = temp_elements;
 			m_first = elements;
-			m_last = elements+size;
+			m_last = elements+m_size;
 	}
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::erase(iterator pos){
-//fix it		
-		std::copy(pos,elements+m_size,--pos);
-		m_size -= 1;
+		
+
+		for (auto i(pos); i != end(); ++i) {
+			if(i == begin()){
+				continue;
+			}
+			*(i-1) = *i;
+		}
+		m_size--;
+		m_last--;
+
+		return pos+1;
+	} 
+	template <typename T>
+	typename Vector<T>::iterator Vector<T>::erase(iterator first,iterator last){
+		
+		iterator j(first);
+		int counter = 0;
+		for (auto i(last); i != end(); ++i) {
+			*(j++) = *i;
+			counter ++;
+		}
+		m_size -= last-first;
+		m_last -= last-first;
+
+		return first+counter;
 	} 
 	/*}}}*/
 
@@ -352,7 +373,31 @@ namespace sc
 		// ++it
 		return ++this->m_ptr;
 	}
+	/*!
+	 * \brief Operator `-` overload function
+	 */
+	template <class T>
+	typename Vector<T>::iterator Vector<T>::iterator::operator-(int a ){
+		// ++it
+		return this->m_ptr-a;
+	}
 
+	/*!
+	 * \brief Operator `-` overload function for ptr_diff
+	 */
+	template <class T>
+	int Vector<T>::iterator::operator-(iterator rhs ){
+		return this->m_ptr-rhs.m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `+` overload function
+	 */
+	template <class T>
+	typename Vector<T>::iterator Vector<T>::iterator::operator+(int a ){
+		// ++it
+		return this->m_ptr+a;
+	}
 	/*!
 	 * \brief Operator `++` overload function
 	 * \param int : The object itself

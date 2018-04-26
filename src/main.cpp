@@ -49,8 +49,11 @@ int main( void ){
 
     std::cout << "Depois:\n";
 	printArray( teste, ' ' );
-// fix it 	teste.erase(teste.begin());
+	teste.erase(teste.begin(),teste.begin()+15);
 	printArray( teste, ' ' );
+	std::cout << "Capacity before " << teste.capacity() << std::endl;
+	teste.shrink_to_fit();
+	std::cout << "Capacity after " << teste.capacity() << std::endl;
 	printArray( teste2, ' ' );
 
 	std::cout << "\n\n";
