@@ -41,6 +41,32 @@ namespace sc
 	}
 
 	/*!
+	 * \brief Copy constructor, makes a *deep copy* of another Vector object
+	 * \param const Vector &other : Another Vector object
+	 */
+	template <class T>
+	Vector<T>::Vector( const Vector &other ){
+		int temp_capacity;
+		if( other.size() > 2 ){
+			temp_capacity = pow( 2, int(log2(other.size())) );
+
+			if( other.size() > temp_capacity ){
+				temp_capacity *= 2;
+			}
+		} else {
+			temp_capacity = other.size();
+		}
+		this->elements = new T[temp_capacity];
+		for( int i = 0; i < temp_capacity; i++ ){
+			elements[i] = other.elements[i];	
+		}
+		this->m_first = elements;
+		this->m_last = elements + other.size();
+		this->m_size = other.size();
+		this->m_capacity = temp_capacity;
+	}
+ 
+	/*!
 	 * \brief Default destructor
 	 */
 	template <class T>

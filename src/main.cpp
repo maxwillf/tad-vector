@@ -42,26 +42,28 @@ int main( void ){
 
     // operations stay here
 
+	Vector<int> testeCopy(teste);
     teste = teste2;
     // teste2 = teste;
 
     // end of operations space
 
     std::cout << "Depois:\n";
+	// printArray( teste, ' ' );
+	// teste.erase(teste.begin(),teste.begin()+15);
 	printArray( teste, ' ' );
-	teste.erase(teste.begin(),teste.begin()+15);
-	printArray( teste, ' ' );
-	std::cout << "Capacity before " << teste.capacity() << std::endl;
-	teste.shrink_to_fit();
-	std::cout << "Capacity after " << teste.capacity() << std::endl;
+	// std::cout << "Capacity before " << teste.capacity() << std::endl;
+	// teste.shrink_to_fit();
+	// std::cout << "Capacity after " << teste.capacity() << std::endl;
 	printArray( teste2, ' ' );
+	printArray( testeCopy, ',' );
 
 	std::cout << "\n\n";
-	teste2.clear();
-	printArray(teste2, ' ');
-	teste2.push_back(1);
-	std::cout << "size before " << teste2.size() << std::endl;
-	printArray(teste2, ' ');
-	std::cout << "size after " << teste2.size() << std::endl ;
+	// teste2.clear();
+	// printArray(teste2, ' ');
+	// teste2.push_back(1);
+	// std::cout << "size before " << teste2.size() << std::endl;
+	// printArray(teste2, ' ');
+	// std::cout << "size after " << teste2.size() << std::endl ;
 	return 0;
 }
