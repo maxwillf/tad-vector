@@ -67,8 +67,9 @@ namespace sc
 	}
 
 	/*!
-	 * \brief Initializer_list constructor
-	 * \param std::initializer_list<T> ilist : Bracket initializer
+	 * \brief 	Constructor that takes a std::initializer_list as arg.
+	 * \param std::initializer_list ilist : Initializer list that will turn into
+	 * a Vector
 	 */
 	template <class T>
 	Vector<T>::Vector( std::initializer_list<T> ilist ){
@@ -93,7 +94,30 @@ namespace sc
 		this->m_size = ilist.size();
 		this->m_capacity = temp_capacity;
 	}
-	
+
+	template <class InputIt>
+	Vector<InputIt>::Vector( InputIt *first, InputIt *last ){
+		int temp_capacity;		
+		int size = std::distance(first, last);
+		if( size > 2 ){
+			temp_capacity = pow( 2, int(log2( size )) );
+
+			if( size > temp_capacity ){
+				temp_capacity *= 2;	
+			}
+		} else {
+			temp_capacity = size;
+		}
+		this->elements = new InputIt[temp_capacity];
+		int buf = 0;
+		for( auto *i = first; i < last; i++, buf++ ){
+			elements[buf] = *i;
+		}
+		this->m_first = elements;
+		this->m_last = elements + size;
+		this->m_size = size;
+		this->m_capacity = temp_capacity;
+	}
  
 	/*!
 	 * \brief Default destructor
@@ -251,7 +275,6 @@ namespace sc
 	 */
 	template <class T>
 	T& Vector<T>::operator[]( size_type pos ){
-
 		return this->elements[pos]; 
 	}
 
@@ -275,6 +298,52 @@ namespace sc
 			this->elements[i] = rhs.elements[i];
 		}
 		return *this;
+	}
+
+	/*!
+	 * \brief	sc::Vector operator '=' overload function that constructs the 
+	 * object following a std::initializer_list object.
+	 * \param std::initializer_list ilist : Initializer list object
+	 */
+	template <class T>
+	Vector<T> &Vector<T>::operator=( std::initializer_list<T> ilist ){
+		int temp_capacity;
+		if( ilist.size() > 2 ){
+			temp_capacity = pow( 2, int(log2(ilist.size())) );
+			if( ilist.size() > temp_capacity ){
+				temp_capacity *= 2;
+			} 
+		} else {
+			temp_capacity = ilist.size();
+		}
+
+		// security check
+		if( this->elements != NULL ){
+			if(debug) std::cout << "Deleting elements[]" << std::endl;
+			delete[] this->elements;
+			if( this->elements == NULL ){
+				if(debug) std::cout << "Elements now is deleted." << std::endl;
+			}
+		}
+
+		this->elements = new T[temp_capacity];
+		if(debug) std::cout << "temp_capacity = " << temp_capacity << std::endl;
+
+		int buf = 0;
+		for( auto *i = std::begin(ilist); i != std::end(ilist); i++, buf++ ){
+			if(debug){
+				std::cout << "Entrou no for ~ ";
+				std::cout << "i="<< *i << " / ";
+				std::cout << "buf=" << buf << std::endl;
+			}
+			elements[buf] = *i;
+		}
+		// std::cout << "Saiu do for()" << std::endl;
+		this->m_first = elements;
+		this->m_last = elements + ilist.size();
+		this->m_size = ilist.size();
+		this->m_capacity = temp_capacity;
+		if(debug) std::cout << "Saiu da função do operator" << std::endl;
 	}
 
 	/*!

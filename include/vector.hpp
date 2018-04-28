@@ -1,6 +1,6 @@
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
-#define debug false
+#define debug true
 #include <iostream>
 #include <cmath>
 #include <algorithm>
@@ -18,8 +18,6 @@ using size_type = size_t;
 
 namespace sc
 {
-
-
 	template <class T>
 	class Vector{
 	public:
@@ -82,10 +80,10 @@ namespace sc
 
 		// TODO
 		explicit Vector( size_type count );
-		template <class InputIt>
-		Vector( InputIt first, InputIt last );
+		// template <class T>
+		Vector( T *first, T *last );
 		Vector( const Vector &other );			// Makes a deep copy of &other
-		Vector( std::initializer_list<T> ilist );
+		Vector( std::initializer_list<T> ilist ); // Already done
 		// END OF TODO
 
 		~Vector();					// Default destructor
@@ -130,7 +128,7 @@ namespace sc
 		// Copy content from another object
 		Vector &operator=( const Vector & );
 
-		// TODO
+		// Check syntax
 		Vector &operator=( std::initializer_list<T> ilist );
 
 		// Checks if Vector1 == Vector2
@@ -143,9 +141,7 @@ namespace sc
 		T &operator[]( size_type );	 		
 		/*}}}*/
 
-
 	};
-
 }
 
 // Source code 
