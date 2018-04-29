@@ -1,8 +1,8 @@
 #include "vector.hpp"
 
 /*!
- * \file vector.inl
- * \author Felipe Ramos & Max William
+ * \file 	vector.inl
+ * \author 	Felipe Ramos & Max William
  */
 
 namespace sc
@@ -10,8 +10,8 @@ namespace sc
 	/* Special Member Block {{{*/
 
 	/*!
-	 * \brief Default constructor
-	 * \param int size : Number of elements that the vector will have.
+	 * \brief 	Default constructor
+	 * \param 	int size : Number of elements that the vector will have.
 	 */
 	template <class T>
 	Vector<T>::Vector( int size ){
@@ -41,8 +41,8 @@ namespace sc
 	}
 
 	/*!
-	 * \brief Copy constructor, makes a *deep copy* of another Vector object
-	 * \param const Vector &other : Another Vector object
+	 * \brief 	Copy constructor, makes a *deep copy* of another Vector object
+	 * \param 	const Vector &other : Another Vector object
 	 */
 	template <class T>
 	Vector<T>::Vector( const Vector &other ){
@@ -68,15 +68,14 @@ namespace sc
 
 	/*!
 	 * \brief 	Constructor that takes a std::initializer_list as arg.
-	 * \param std::initializer_list ilist : Initializer list that will turn into
-	 * a Vector
+	 * \param 	std::initializer_list ilist : Initializer list that will
+	 * 			turn into a Vector
 	 */
 	template <class T>
 	Vector<T>::Vector( std::initializer_list<T> ilist ){
 	int temp_capacity;			
 		if( ilist.size() > 2 ){
 			temp_capacity = pow( 2, int(log2(ilist.size())) );					
-
 			if( ilist.size() > temp_capacity ){
 				temp_capacity *= 2;		
 			}
@@ -95,13 +94,17 @@ namespace sc
 		this->m_capacity = temp_capacity;
 	}
 
+	/*!
+	 * \brief	Constructor that makes a copy from another simple array.
+	 * \param 	InputIt *first : First element from the array
+	 * \param 	InputIt *last : Last (stub) element from the array
+	 */
 	template <class InputIt>
 	Vector<InputIt>::Vector( InputIt *first, InputIt *last ){
 		int temp_capacity;		
 		int size = std::distance(first, last);
 		if( size > 2 ){
 			temp_capacity = pow( 2, int(log2( size )) );
-
 			if( size > temp_capacity ){
 				temp_capacity *= 2;	
 			}
@@ -120,7 +123,7 @@ namespace sc
 	}
  
 	/*!
-	 * \brief Default destructor
+	 * \brief 	Default destructor
 	 */
 	template <class T>
 	Vector<T>::~Vector(){
@@ -303,47 +306,33 @@ namespace sc
 	/*!
 	 * \brief	sc::Vector operator '=' overload function that constructs the 
 	 * object following a std::initializer_list object.
+	 * PS: Function not working!
 	 * \param std::initializer_list ilist : Initializer list object
 	 */
 	template <class T>
 	Vector<T> &Vector<T>::operator=( std::initializer_list<T> ilist ){
 		int temp_capacity;
 		if( ilist.size() > 2 ){
-			temp_capacity = pow( 2, int(log2(ilist.size())) );
+			temp_capacity = pow( 2, int( log2( ilist.size() ) ) );
 			if( ilist.size() > temp_capacity ){
 				temp_capacity *= 2;
-			} 
+			}
 		} else {
 			temp_capacity = ilist.size();
 		}
 
-		// security check
-		if( this->elements != NULL ){
-			if(debug) std::cout << "Deleting elements[]" << std::endl;
-			delete[] this->elements;
-			if( this->elements == NULL ){
-				if(debug) std::cout << "Elements now is deleted." << std::endl;
-			}
-		}
-
 		this->elements = new T[temp_capacity];
-		if(debug) std::cout << "temp_capacity = " << temp_capacity << std::endl;
 
 		int buf = 0;
 		for( auto *i = std::begin(ilist); i != std::end(ilist); i++, buf++ ){
-			if(debug){
-				std::cout << "Entrou no for ~ ";
-				std::cout << "i="<< *i << " / ";
-				std::cout << "buf=" << buf << std::endl;
-			}
 			elements[buf] = *i;
 		}
-		// std::cout << "Saiu do for()" << std::endl;
+
 		this->m_first = elements;
 		this->m_last = elements + ilist.size();
 		this->m_size = ilist.size();
 		this->m_capacity = temp_capacity;
-		if(debug) std::cout << "Saiu da função do operator" << std::endl;
+		if(debug) std::cout << ">> Saiu da função!" << std::endl;
 	}
 
 	/*!

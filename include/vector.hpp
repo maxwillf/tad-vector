@@ -76,17 +76,12 @@ namespace sc
 	public:
 
 		/* Special functions {{{*/
-		Vector( int );				// Default constructor
-
-		// TODO
+		Vector( int );							// Default constructor
 		explicit Vector( size_type count );
-		// template <class T>
-		Vector( T *first, T *last );
+		Vector( T *first, T *last );			// Copy a array into Vector Obj
 		Vector( const Vector &other );			// Makes a deep copy of &other
-		Vector( std::initializer_list<T> ilist ); // Already done
-		// END OF TODO
-
-		~Vector();					// Default destructor
+		Vector( std::initializer_list<T> ilist ); // Create a Vector by iList
+		~Vector();								// Default destructor
 		/*}}}*/
 
 		/* Capacity functions {{{*/
