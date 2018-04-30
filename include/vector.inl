@@ -7,34 +7,51 @@
 
 namespace sc
 {
+
 	/* Special Member Block {{{*/
 
 	/*!
-	 * \brief 	Default constructor
-	 * \param 	int size : Number of elements that the vector will have.
+	 * \brief	Constructs the list with count default-inserted instances of T 	
+	 * \param 	size_type count : Number of elements that the vector will have
 	 */
 	template <class T>
-	Vector<T>::Vector( int size ){
+	Vector<T>::Vector( size_type count ){
 		int temp_capacity;
-		if( size > 2 ){
-			temp_capacity = pow( 2, int(log2(size)) );	 // 2 ^ x growth
-			if( size > temp_capacity ){
+		if( count > 2 ){
+			temp_capacity = pow( 2, int(log2(count)) );	 // 2 ^ x growth
+			if( count > temp_capacity ){
 				temp_capacity *= 2;
 			}
 		} else {
-			temp_capacity = size;
+			temp_capacity = count;
 		}
 
-		// alocating [size] elements of type T
+		// alocating [count] elements of type T
 		this->elements = new T[temp_capacity];
-		for( int i = 0; i < size; i++ ){
+		for( int i = 0; i < count; i++ ){
 			if(debug) elements[i] = i;			// debug inicializer
 			else elements[i] = 0;				// normal inicializer
 		}
 
 		this->m_first = elements;
-		this->m_last = elements + size;
-		this->m_size = size;
+		this->m_last = elements + count;
+		this->m_size = count;
+		this->m_capacity = temp_capacity;
+
+		if(debug) std::cout << "> Vector allocated with sucess!" << std::endl;
+	}
+
+	/*!
+	 * \brief	Default constructor that creates an empty list
+	 */
+	template <class T>
+	Vector<T>::Vector( void ){
+		int temp_capacity = 2;		
+
+		this->elements = new T[temp_capacity];
+		this->m_first = elements;
+		this->m_last = elements + temp_capacity;
+		this->m_size = temp_capacity;
 		this->m_capacity = temp_capacity;
 
 		if(debug) std::cout << "> Vector allocated with sucess!" << std::endl;
@@ -324,7 +341,7 @@ namespace sc
 		this->elements = new T[temp_capacity];
 
 		int buf = 0;
-		for( auto *i = std::begin(ilist); i != std::end(ilist); i++, buf++ ){
+		for( auto i = std::begin(ilist); i != std::end(ilist); i++, buf++ ){
 			elements[buf] = *i;
 		}
 
@@ -541,7 +558,5 @@ namespace sc
 	}
 
 	/*}}}*/
-	
-	
 
 }

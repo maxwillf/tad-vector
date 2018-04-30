@@ -65,6 +65,7 @@ namespace sc
 		typename Vector<T>::iterator cbegin() const;
 		typename Vector<T>::iterator cend() const;
 		/*}}}*/
+
 		private:
 
 		T *m_first;					// an 'first' pointer
@@ -76,8 +77,8 @@ namespace sc
 	public:
 
 		/* Special functions {{{*/
-		Vector( int );							// Default constructor
-		explicit Vector( size_type count );
+		Vector( void );							// Default constructor
+		explicit Vector( size_type count );		// Allocate and set to a default
 		Vector( T *first, T *last );			// Copy a array into Vector Obj
 		Vector( const Vector &other );			// Makes a deep copy of &other
 		Vector( std::initializer_list<T> ilist ); // Create a Vector by iList

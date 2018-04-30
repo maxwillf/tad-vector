@@ -2,55 +2,59 @@
 #
 # Made by Max William, minor changes by Felipe Ramos
 
-# Conventions
-Target = vector
+# Default Conventions
+Target = vector 	# Name of the project
 INCLUDES = include
 HEADERS = $(wildcard $(INCLUDES)/*)
 CXX = g++
 CXXFLAGS = -std=c++11 -g -ggdb -I $(INCLUDES)
 DOCS = html latex
+
+# Directories
 SRCDIR = src
 OBJDIR = obj
 BINDIR = bin
 
+# Some locations
 SOURCES := $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+
 
 all: project #docs
 
 project: $(OBJECTS) $(HEADERS) | $(BINDIR)
-	@echo "> LINKIN FILES: " $(OBJECTS) 
+	@echo "Linking files:" $(OBJECTS) 
 	@$(CXX) $(OBJECTS) $(CXXFLAGS) -o $(BINDIR)/$(Target)
-	@echo "> LINKIN COMPLETE!"
-	@echo "Link created on:"
-	@ln -sfv $(BINDIR)/$(Target) $(Target) # Creates a link to the root
+	@ln -sfv $(BINDIR)/$(Target) $(Target) # Creates a link to the root folder
 
 docs: 
-	@echo "> GENERATING DOCUMENTATION"
+	@echo "Generating documentation"
 	@doxygen Doxyfile
 	
 $(OBJECTS):	$(OBJDIR)/%.o : $(SRCDIR)/%.cpp $(HEADERS) | $(OBJDIR)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
-	@echo "> SOURCES $<" 
-	@echo "> COMPILING FILES $< TO  $@ "
-	@echo "> COMPILED "$<" SUCCESFULLY!"
+	@echo "Sources: $<" 
+	@echo "Compiling files {$<} to {$@}"
+	@echo "Compiled {$<} succesfully!"
 
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 
 $(BINDIR):
-	mkdir -p $(BINDIR)
+	@mkdir -p $(BINDIR)
 
+# PHONY targets
 .PHONY: clean clean_txt clean_docs clean_proj
+
 clean: clean_proj #clean_txt clean_docs
 
 clean_proj:
-	@rm -r $(OBJDIR)
-	@rm $(BINDIR)/$(Target)
-	@rm $(Target)
-	@echo "> CLEANUP DONE!"
+	@rm -r $(OBJDIR)			# Removes all objects on $(OBJDIR)
+	@rm $(BINDIR)/$(Target)		# Removes the binary file
+	@rm $(Target)				# Removes the symlink
+	@echo "Cleanup done!"		# Simple debug text
 clean_txt: $(TEXT)
-	@rm -f $(TEXT)
+	@rm -f $(TEXT)				# Removes all TXT files
 
 clean_docs: $(DOCS)
-	@rm -r $(DOCS)
+	@rm -r $(DOCS)				# Removes all Doc generated files

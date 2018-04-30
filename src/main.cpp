@@ -25,21 +25,23 @@ void populate( Vector<T> &V ){
 }
 
 int main( void ){
-    // declaration
-	Vector<int> teste(10);
+	Vector<int> teste( 10 );
 	populate(teste);
 
-    // just a pretty print
     std::cout << "\n\n";
 
-    std::cout << "Antes:\n";
+    std::cout << "> Antes:\n";
 	printArray( teste, ' ' );
 
     // operations stay here
 
+	teste = {{ 2, 2, 2, 2 }}; 	// why does only work with two braces?
+								// (if only { ...numbers... }, will not work)
 
     // end of operations space
 
+	std::cout << "> Depois:\n";
+	printArray( teste, ' ' );
 
 	std::cout << "\n\n";
 	return 0;
