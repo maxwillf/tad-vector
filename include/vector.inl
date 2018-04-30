@@ -50,8 +50,8 @@ namespace sc
 
 		this->elements = new T[temp_capacity];
 		this->m_first = elements;
-		this->m_last = elements + temp_capacity;
-		this->m_size = temp_capacity;
+		this->m_last = elements;
+		this->m_size = 0; 
 		this->m_capacity = temp_capacity;
 
 		if(debug) std::cout << "> Vector allocated with sucess!" << std::endl;
@@ -176,12 +176,14 @@ namespace sc
 			std::copy( elements, m_last, temp_elements );
 			delete [] elements;
 			elements = temp_elements;
+			m_first = elements;
+			m_last = elements+m_size;
 		}
 	}
 	/*}}}*/
 
 	/* Modifiers Methods {{{*/
-
+	/*! Adds an element to the back of the array */
 	template <class T>
 	void Vector<T>::push_back( const T& value ){
 		if(m_size <= 2){
@@ -203,6 +205,61 @@ namespace sc
 			*(m_last++) = value;
 		}
 	}
+	/*! Adds an element to the front of the array */
+	template <typename T>
+	void Vector<T>::push_front(const T & value){
+	
+		if(m_size <= 2){
+			this->reserve(2);
+			m_size += 1;
+			if(m_size >= 1){
+				 std::copy(m_first,m_last,m_first+1);
+			}
+			m_last++;
+			*m_first = value;
+		}
+		
+		else if( m_size < m_capacity ){
+			std::copy(m_first,m_last,m_first+1);
+			*m_first = value;
+			m_size += 1;
+			m_last++;
+		} 
+		else {
+			
+			this->reserve( m_capacity * 2 );	
+			m_size += 1;
+			std::copy(m_first,m_last,m_first+1);
+			*m_first = value;
+			m_last++;
+		}
+	}
+	/*! Deletes first element in the array*/
+	template <typename T>
+	void Vector<T>::pop_front(){
+
+		if(m_size != 0){
+			std::copy(m_first+1,m_last,m_first);
+			m_size--;
+			m_last--;
+		}
+		else{
+			throw std::runtime_error("Don't pop an empty vector");
+		}
+	}
+	/*! Deletes last element in the array*/
+	template <typename T>
+	void Vector<T>::pop_back(){
+
+		if(m_size != 0){
+			m_size--;
+			m_last--;
+		}
+		else{
+			throw std::runtime_error("Don't pop an empty vector");
+		}
+	}
+	
 	/*! Removes all elements from the vector but leaves capacity unchanged*/
 	template <typename T>
 	void Vector<T>::clear(void){

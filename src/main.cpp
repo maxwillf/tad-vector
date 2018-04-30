@@ -37,7 +37,7 @@ int main( void ){
 
 	teste = {{ 2, 2, 2, 2 }}; 	// why does only work with two braces?
 								// (if only { ...numbers... }, will not work)
-
+	teste.push_front(5);
     // end of operations space
 
 	std::cout << "> Depois:\n";
