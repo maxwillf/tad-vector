@@ -106,9 +106,9 @@ namespace sc
 		void push_back( const T & );	// insert an element on last position
 		void pop_front(); // deletes element on first position
 		void pop_back(); // deletes element on last position
-		void insert(iterator pos, const T & value );
-		void insert(iterator pos,iterator first, iterator last );
-		void insert(iterator pos,std::initializer_list<T> ilist);
+		iterator insert(iterator pos, const T & value );
+		iterator insert(iterator pos,iterator first, iterator last );
+		iterator insert(iterator pos,std::initializer_list<T> ilist);
 		void shrink_to_fit();  
 		//Reduces Capacity according to the vector actual size 
 		void assign( const T & );

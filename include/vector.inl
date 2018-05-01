@@ -260,26 +260,38 @@ namespace sc
 		}
 	}
 	template <typename T>
-	void Vector<T>::insert(iterator pos, const T & value){
-		if(m_size++ == m_capacity){
+	typename Vector<T>::iterator Vector<T>::insert
+	(iterator pos, const T & value){
+		
+		int distance = pos-m_first;
+		bool reserved = false;	
+		if(++m_size >= m_capacity){
 			this->reserve(m_capacity*2);
+			reserved = true;
 		}
-		if(pos == end())
+		
+		if(debug)	std::cout << "Distance: " << distance << std::endl;
+
+		if(distance == m_size)
 		{
-			*pos = value;
-			m_last++;
+			*m_last = value;
+			if(!reserved) m_last++;
+			return elements+m_size;
 		}
 		else{
 			T temp;
-			for (auto i(end()); i != pos; i--) {
+			std::copy(elements+distance,elements+m_size,elements+distance+1);
+		/*	for (auto i(end()); i != pos; i--) {
 				*i = *(i-1);	
-			}
-			*pos = value;
-			m_last++;
+			} */
+			*(elements+distance) = value;
+			if(!reserved) m_last++;
 		}
+		return elements+distance;
 	}
 	template <typename T>
-	void Vector<T>::insert(iterator pos,iterator first, iterator last ){
+	typename Vector<T>::iterator Vector<T>::insert
+	(iterator pos,iterator first, iterator last ){
 		int distance = last-first;
 		int first_index = pos-m_first;
 		T temp[distance];	
@@ -307,7 +319,7 @@ namespace sc
 		}
 		m_last += distance;
 		m_size += distance;
- 
+		return elements+first_index; 
 	}
 	/*! Removes all elements from the vector but leaves capacity unchanged*/
 	template <typename T>
