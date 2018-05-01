@@ -281,24 +281,33 @@ namespace sc
 	template <typename T>
 	void Vector<T>::insert(iterator pos,iterator first, iterator last ){
 		int distance = last-first;
-// i'm sleepy fix this tomorrow
-// // Vector::reserve is bugged or maybe not // probably insert is the problem
-// really
-/*		while(m_size+distance >= m_capacity){
-			this->reserve(m_capacity*2);
-		} */
-		iterator temp = end();
-		for (auto i(pos); i != end(); ++i) {
-			std::cout << "Debug : " << *i << std::endl;
-//			*temp++ = *i;
+		int first_index = pos-m_first;
+		T temp[distance];	
+		int index = 0;
+		for (auto i(first); i != last; ++i,++index) {
+			temp[index] = *i;
 		}
-		auto fill(pos);
-		/*for (auto i(first); i != last; ++i) {
-			*fill++ = *i;	
-		}*/
-//		m_last += distance;
-//		m_size += distance;
-
+	
+		if(debug){
+			std::cout << "Before : ";
+			std::copy(temp,temp+distance,
+					std::ostream_iterator<int>(std::cout ," "));
+		}
+		
+		while(m_size+distance >= m_capacity){
+			this->reserve(m_capacity*2);
+		} 
+		std::copy(elements+first_index,elements+m_size,elements+m_size);
+		std::copy(temp,temp+distance,elements+first_index);
+	
+		if(debug) {
+			std::cout << "After : ";
+			std::copy(elements,elements+m_size,
+				std::ostream_iterator<int>(std::cout ," "));
+		}
+		m_last += distance;
+		m_size += distance;
+ 
 	}
 	/*! Removes all elements from the vector but leaves capacity unchanged*/
 	template <typename T>

@@ -46,8 +46,6 @@ int main( void ){
 	printArray( teste, ' ' );
 	teste.insert(teste.end(),111);
 	printArray( teste, ' ' );
-	teste.reserve(teste.capacity()*2);
-	printArray( teste, ' ' );
 	teste.insert(teste.begin(),teste.begin(),teste.end());
 	//printArray( teste, ' ' );
 	//teste.insert(teste.begin()+3,teste3.begin(),teste3.begin()+2);

@@ -1,6 +1,6 @@
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
-#define debug true
+#define debug false
 #include <iostream>
 #include <cmath>
 #include <algorithm>
