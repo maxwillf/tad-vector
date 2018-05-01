@@ -259,7 +259,47 @@ namespace sc
 			throw std::runtime_error("Don't pop an empty vector");
 		}
 	}
-	
+	template <typename T>
+	void Vector<T>::insert(iterator pos, const T & value){
+		if(m_size++ == m_capacity){
+			this->reserve(m_capacity*2);
+		}
+		if(pos == end())
+		{
+			*pos = value;
+			m_last++;
+		}
+		else{
+			T temp;
+			for (auto i(end()); i != pos; i--) {
+				*i = *(i-1);	
+			}
+			*pos = value;
+			m_last++;
+		}
+	}
+	template <typename T>
+	void Vector<T>::insert(iterator pos,iterator first, iterator last ){
+		int distance = last-first;
+// i'm sleepy fix this tomorrow
+// // Vector::reserve is bugged or maybe not // probably insert is the problem
+// really
+/*		while(m_size+distance >= m_capacity){
+			this->reserve(m_capacity*2);
+		} */
+		iterator temp = end();
+		for (auto i(pos); i != end(); ++i) {
+			std::cout << "Debug : " << *i << std::endl;
+//			*temp++ = *i;
+		}
+		auto fill(pos);
+		/*for (auto i(first); i != last; ++i) {
+			*fill++ = *i;	
+		}*/
+//		m_last += distance;
+//		m_size += distance;
+
+	}
 	/*! Removes all elements from the vector but leaves capacity unchanged*/
 	template <typename T>
 	void Vector<T>::clear(void){

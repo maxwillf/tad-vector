@@ -1,6 +1,6 @@
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
-#define debug false
+#define debug true
 #include <iostream>
 #include <cmath>
 #include <algorithm>
@@ -101,18 +101,20 @@ namespace sc
 
 		/* Modifiers functions {{{*/
 		/*! Deletes all elements from the vector */
-		void clear();
-		void push_front( const T & );
+		void clear(); // Clears array from all elements
+		void push_front( const T & );  // insert an element on first position
 		void push_back( const T & );	// insert an element on last position
-		void pop_front();
-		void pop_back();
-		void insert( T & );
-		/*! Reduces Capacity according to the vector actual size */
-		void shrink_to_fit();
+		void pop_front(); // deletes element on first position
+		void pop_back(); // deletes element on last position
+		void insert(iterator pos, const T & value );
+		void insert(iterator pos,iterator first, iterator last );
+		void insert(iterator pos,std::initializer_list<T> ilist);
+		void shrink_to_fit();  
+		//Reduces Capacity according to the vector actual size 
 		void assign( const T & );
 		iterator erase(iterator pos); // Deletes element in position pos
-		/*! Deletes elements in [first,last) */
-		iterator erase(iterator first,iterator last);
+		iterator erase(iterator first,iterator last); 
+		// Deletes elements in [first,last) 
 		/* }}} */
 
 		/* Element access functions {{{*/
