@@ -118,6 +118,26 @@ int main( void ){
 			std::cout << "Copied vector elements: ";
 			client::print_it( copyVec, ' ' );
 		}
+
+		{	h::h2("Object construtor by std::initializer");
+			
+			// Declaration
+			sc::Vector<int> initVec = { 1, 4, 3, 2, 5, 9, 10 };
+
+			// Simple print
+			std::cout << "Initializer Vector elements: ";
+			client::print_it(initVec, ' ');
+		}
+
+		{	h::h2("Vector destructor");
+			// Declaration
+			sc::Vector<int> *V = new sc::Vector<int>;
+			std::cout << "Vector allocated on " << V << std::endl;
+			
+			std::cout << "Trying to delete " << V << "..." << std::endl;
+			delete V;
+			std::cout << "Vector deleted with sucess!\n";
+		}
 		h::sep();
 	}
 	/*}}}*/
