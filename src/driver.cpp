@@ -172,6 +172,26 @@ int main( void ){
 			client::populate(V2);
 			std::cout << "Vector V2 has " << V2.size() << " elements\n";
 		}
+		
+		{	h::h2("Capacity method test");
+			// declaration
+			sc::Vector<int> V(20);	// this should give a capacity of 2^5
+			std::cout << "Vector V created with 20 elements\n";
+			std::cout << "It should have a capacity of 2^(ceil(log2(20)))\n";
+			std::cout << "Capacity: " << V.capacity() << std::endl;
+		}
+
+		{	h::h2("Reserve method test");
+			// declaration
+			sc::Vector<int> V(20);
+			std::cout << "Vector V created with 20 elements at ";
+			std::cout << &V << std::endl;
+			std::cout << "It has the initial capacity of 2^(ceil(log2(20)))\n";
+			std::cout << "V.capacity() = " << V.capacity() << std::endl;
+			std::cout << "calling reserve(40)...\n";
+			V.reserve(40);	
+			std::cout << "V.capacity() = " << V.capacity() << std::endl;
+		}
 		h::sep();
 	}
 	/*}}}*/
