@@ -152,6 +152,11 @@ namespace sc
 	/*}}}*/
 
 	/* Capacity Methods {{{*/
+	template <class T>
+	bool Vector<T>::empty(){
+		return (m_size == 0 ? true : false);
+	}
+
 	/*! Returns the amount of elements in the vector */
 	template <class T>
 	size_type Vector<T>::size() const {

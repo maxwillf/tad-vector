@@ -49,8 +49,9 @@ $(BINDIR):
 clean: clean_proj #clean_txt clean_docs
 
 clean_proj:
-	@rm -r $(OBJDIR)			# Removes all objects on $(OBJDIR)
-	@rm -rf $(BINDIR)/*			# Removes the binary file
+	@rm -rf $(OBJDIR)/{*}			# Removes all objects on $(OBJDIR)
+	@rm -rf $(BINDIR)/{*}		# Removes the binary file
+	@rm -rf $(BINDIR)/driver
 	@rm $(Target)				# Removes the symlink
 	@echo "Cleanup done!"		# Simple debug text
 clean_txt: $(TEXT)

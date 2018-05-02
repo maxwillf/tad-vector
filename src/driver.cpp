@@ -145,7 +145,33 @@ int main( void ){
 	/* Capacity functions tests {{{*/
 	{
 		h::h1("Capacity functions tests");
-		std::cout << "TESTS HERE...\n";
+		{	h::h2("Empty method test");
+			// Declaration
+			sc::Vector<int> V(10);
+			client::populate(V);
+			std::cout << "created Vector V with 10 elements\n";
+			sc::Vector<int> V_emp;	
+			std::cout << "created Vector V_emp with 0 elements\n";
+
+			// tests
+			std::cout << "Is V empty? ";
+			std::cout << ( V.empty() ? "Yes\n" : "No\n" );
+			std::cout << "Is V_emp empty? ";
+			std::cout << ( V_emp.empty() ? "Yes\n" : "No\n" );
+		}
+
+		{	h::h2("Size method test");
+			// declaration
+			sc::Vector<int> V(10);
+			std::cout << "Vector V created\n";
+			client::populate(V);
+			std::cout << "Vector V has " << V.size() << " elements\n";
+
+			sc::Vector<int> V2(40);
+			std::cout << "Vector V2 created\n";
+			client::populate(V2);
+			std::cout << "Vector V2 has " << V2.size() << " elements\n";
+		}
 		h::sep();
 	}
 	/*}}}*/
