@@ -199,7 +199,66 @@ int main( void ){
 	/* Modifiers functions tests {{{*/
 	{
 		h::h1("Modifiers functions tests");
-		std::cout << "TESTS HERE...\n";
+
+		{	h::h2("Clear method test");
+			// Declaration
+
+		}
+
+		{	h::h2("Push_front method test");
+			// Declaration
+
+		}
+
+		{	h::h2("Push_back method test");
+			// Declaration
+
+		}
+
+		{	h::h2("Pop_front method test");
+			// Declaration
+
+		}
+
+		{	h::h2("Pop_back method test");
+			// Declaration
+
+		}
+
+		{	h::h2("Insert method with an iterator and value");
+			// Declaration
+
+		}
+
+		{	h::h2("Insert method with an iterator and it first / last");
+			// Declaration
+
+		}
+
+		{	h::h2("Insert method with an iterator and a initializer list");
+			// Declaration
+
+		}
+
+		{	h::h2("Shrink_to_fit method test");
+			// Declaration
+
+		}
+
+		{	h::h2("Assign method test");
+			// Declaration
+
+		}
+
+		{	h::h2("Erase method with iterator");
+			// Declaration
+
+		}
+
+		{	h::h2("Erase method with iterator first / last");
+			// Declaration
+
+		}
 		h::sep();
 	}
 	/*}}}*/
