@@ -504,7 +504,7 @@ namespace sc
 	 */
 	template <class T>
 	bool Vector<T>::operator!=( const Vector &rhs ){
-		if( this == rhs ){
+		if( *this == rhs ){
 			return false;
 		} else {
 			return true;

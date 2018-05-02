@@ -41,20 +41,24 @@ namespace client
 /* Styles functions {{{*/
 namespace h{
 	void sep( void ){
+		std::cout << "\e[2m";
 		for( int i = 0; i < 80; i++ )
 			std::cout << "-";
+		std::cout << "\e[0m";
 		std::cout << std::endl;
 	}
 
 	void h1(std::string phrase){
-		std::cout << "\e[1m";
+		std::cout << "\e[36;4;1m";
 		std::cout << "~ " << phrase;
 		std::cout << "\e[0m" << std::endl;
 	}
 	
 	void h2(std::string phrase){
+		std::cout << "\e[1m";
 		std::cout << "\n> ";
 		std::cout << phrase << std::endl;
+		std::cout << "\e[0m";
 	}
 }
 /*}}}*/
@@ -202,61 +206,84 @@ int main( void ){
 
 		{	h::h2("Clear method test");
 			// Declaration
+			sc::Vector<int> cVec(10);
+			client::populate(cVec);
+			std::cout << "Vector cVec created and populated ~" << &cVec;	
+			std::cout << std::endl << "cVec elements: ";
+			client::print_it(cVec, ' ');
+
+			std::cout << "Running clear() on cVec\n";
+			cVec.clear();
+			std::cout << "cVec.size() = " << cVec.size() << std::endl;
+		}
+
+		{	h::h2("Push_front & push_back method test");
+			// Declaration
+			sc::Vector<int> pVec = {2, 3, 4};
+			std::cout << "Vector pVec elements: ";
+			client::print_it(pVec, ' ');
+
+			pVec.push_back(99);
+			pVec.push_front(-20);
+
+			std::cout << "After push_back & push_front: ";
+			client::print_it(pVec, ' ');
 
 		}
 
-		{	h::h2("Push_front method test");
+		{	h::h2("Pop_front & pop_backmethod test");
 			// Declaration
+			sc::Vector<int> pVec = { 2, 2, 2 };
+			std::cout << "Vector pVec elements: ";
+			client::print_it(pVec, ' ');
 
+			pVec.pop_back();
+			pVec.pop_front();
+
+			std::cout << "after pop_front & pop_back: ";
+			client::print_it(pVec, ' ');
 		}
 
-		{	h::h2("Push_back method test");
+		{	h::h2("Insert methods test");
 			// Declaration
-
-		}
-
-		{	h::h2("Pop_front method test");
-			// Declaration
-
-		}
-
-		{	h::h2("Pop_back method test");
-			// Declaration
-
-		}
-
-		{	h::h2("Insert method with an iterator and value");
-			// Declaration
-
-		}
-
-		{	h::h2("Insert method with an iterator and it first / last");
-			// Declaration
-
-		}
-
-		{	h::h2("Insert method with an iterator and a initializer list");
-			// Declaration
-
+			sc::Vector<int> iVec(10);
+			client::populate(iVec);
+			
+			// TODO
 		}
 
 		{	h::h2("Shrink_to_fit method test");
 			// Declaration
-
+			sc::Vector<int> iVec(10);
+			client::populate(iVec);
+			
+			// TODO
 		}
 
 		{	h::h2("Assign method test");
 			// Declaration
+			sc::Vector<int> iVec(10);
+			client::populate(iVec);
+			
+			// TODO
 
 		}
 
 		{	h::h2("Erase method with iterator");
 			// Declaration
+			sc::Vector<int> iVec(10);
+			client::populate(iVec);
+			
+			// TODO
 
 		}
 
 		{	h::h2("Erase method with iterator first / last");
 			// Declaration
+			sc::Vector<int> iVec(10);
+			client::populate(iVec);
+			
+			// TODO
 
 		}
 		h::sep();
@@ -266,7 +293,17 @@ int main( void ){
 	/* Element access functions tests {{{*/
 	{
 		h::h1("Element access functions tests");
-		std::cout << "TESTS HERE...\n";
+		
+		{	h::h2("Front, back and at method test");
+			sc::Vector<int> Vec(10);
+			client::populate(Vec);
+			std::cout << "Vec elements: ";
+			client::print_it(Vec, ' ');
+			std::cout << "Vec.front() = " << Vec.front() << std::endl;
+			std::cout << "Vec.back() = " << Vec.back() << std::endl;
+			std::cout << "Vec.at(2) = " << Vec.at(2) << std::endl;
+		}
+
 		h::sep();
 	}
 	/*}}}*/
@@ -274,7 +311,31 @@ int main( void ){
 	/* Operators tests {{{*/
 	{
 		h::h1("Operators tests");
-		std::cout << "TESTS HERE...\n";
+
+		{	
+			sc::Vector<int> V = { 1, 3, 2, 5, 4 };
+			sc::Vector<int> V2= { 1, 2, 3, 4, 5 };
+			sc::Vector<int> V3= { 3, 4, 2 };
+			std::cout << "V = ";
+			client::print_it(V, ' ');
+			std::cout << "V2 = ";
+			client::print_it(V2, ' ');
+
+			std::cout << "V == V2? ";
+			if( V == V2 ){
+				std::cout << "True\n";
+			} else {
+				std::cout << "False\n";
+			}
+			std::cout << "V != V2? ";
+			if( V != V2 ){
+				std::cout << "True\n";
+			} else {
+				std::cout << "False\n";
+			}
+		
+			std::cout << "Acessing V[3]: " << V[3] << std::endl;
+		}
 		h::sep();
 	}
 	/*}}}*/
@@ -282,10 +343,33 @@ int main( void ){
 	/* Iterators tests {{{*/
 	{
 		h::h1("Iterators tests");
-		std::cout << "TESTS HERE...\n";
+		
+		{
+			h::h2("Begin & End methods");
+			sc::Vector<int> V(10);
+			client::populate(V);
+			std::cout << "for loop to print elements in the Vector\n";
+			std::cout << "\e[2m(in various forms, check the code to see)\e[0m\n";
+			for( auto &it : V ){
+				std::cout << it << ' ';
+			}
+			std::cout << std::endl;
+			for( auto it = V.begin(); it != V.end(); it++ ){
+				std::cout << *it << ' ';
+			}
+			std::cout << std::endl;
+			for( sc::Vector<int>::iterator it = V.begin(); it != V.end(); ++it ){
+				std::cout << *it << ' ';
+			}
+			std::cout << std::endl;
+		}
+
 		h::sep();
 	}
 	/*}}}*/
+
+	std::cout << "\nEnd of the driver code." << std::endl;
+	std::cout << "Authors: Felipe Ramos and Max William\n" << std::endl;
 
 	return 0;
 }
