@@ -22,6 +22,7 @@ namespace sc
 	template <class T>
 	class Vector{
 	public:
+				typedef const T* const_iterator;
 		/* Class Iterator {{{*/
 		class iterator{
 			public:
@@ -111,7 +112,9 @@ namespace sc
 		iterator insert(iterator pos,std::initializer_list<T> ilist);
 		void shrink_to_fit();  
 		//Reduces Capacity according to the vector actual size 
-		void assign( const T & );
+		void assign(size_type count,  const T & value);
+		void assign(iterator first, iterator last);
+		void assign(std::initializer_list<T> ilist);
 		iterator erase(iterator pos); // Deletes element in position pos
 		iterator erase(iterator first,iterator last); 
 		// Deletes elements in [first,last) 

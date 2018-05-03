@@ -48,13 +48,16 @@ int main( void ){
 	 it =	teste.insert(teste.end(),111);
 	std::cout << "teste iterator insert: " << *it << std::endl;
 	printArray( teste, ' ' );
-	it = teste.insert(teste.begin(),teste.begin(),teste.end());
+	teste.clear();
+	it = teste.insert(teste.begin(),std::initializer_list<int>{1,2,3,4,5,6,7});
 	std::cout << "teste iterator insert: " << *it << std::endl;
 	//printArray( teste, ' ' );
 	//teste.insert(teste.begin()+3,teste3.begin(),teste3.begin()+2);
     // end of operations space
-
+	
 	std::cout << "> Depois:\n";
+	printArray( teste, ' ' );
+	teste.assign(5,3);
 	printArray( teste, ' ' );
 
 	std::cout << "\n\n";

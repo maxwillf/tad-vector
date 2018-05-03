@@ -321,6 +321,37 @@ namespace sc
 		m_size += distance;
 		return elements+first_index; 
 	}
+	template <typename T>
+	typename Vector<T>::iterator Vector<T>::insert
+	(iterator pos,std::initializer_list<T> ilist){
+
+		int first_index = pos-m_first;
+		//T temp[distance];	
+		while(m_size+ilist.size() >= m_capacity){
+			this->reserve(m_capacity*2);
+		}
+		/*for (auto i(first); i != last; ++i,++index) {
+			temp[index] = *i;
+		}
+	
+		if(debug){
+			std::cout << "Before : ";
+			std::copy(temp,temp+distance,
+					std::ostream_iterator<int>(std::cout ," "));
+		}
+		*/
+		std::copy(elements+first_index,elements+m_size,elements+m_size);
+		std::copy(ilist.begin(),ilist.end(),elements+first_index);
+	
+		if(debug) {
+			std::cout << "After : ";
+			std::copy(elements,elements+m_size,
+				std::ostream_iterator<int>(std::cout ," "));
+		}
+		m_last += ilist.size();
+		m_size += ilist.size();
+		return elements+first_index; 
+	}
 	/*! Removes all elements from the vector but leaves capacity unchanged*/
 	template <typename T>
 	void Vector<T>::clear(void){
@@ -328,6 +359,18 @@ namespace sc
 		m_first = elements;
 		m_last = elements;
 	}
+	template <typename T>
+	void Vector<T>::assign(size_type count,  const T & value){
+
+	clear();
+	reserve(count);
+	for (int i = 0; i < count; ++i) {
+		elements[i] = value;	
+	}
+	m_last += count;
+	m_size += count;
+	}
+
 	/*! Shrinks capacity in relation to the actual size of the vector */
 	template <typename T>
 	void Vector<T>::shrink_to_fit(void){
