@@ -24,19 +24,15 @@ OBJECTS := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 all: project #docs
 
 project: $(OBJECTS) $(HEADERS) | $(BINDIR)
-	@echo "Linking files:" $(OBJECTS) 
-	@$(CXX) $(OBJECTS) $(CXXFLAGS) -o $(BINDIR)/$(Target)
-	@ln -sfv $(BINDIR)/$(Target) $(Target) # Creates a link to the root folder
+	$(CXX) $(OBJECTS) $(CXXFLAGS) -o $(BINDIR)/$(Target)
+	@echo "link created: "
+	@ln -sfv $(BINDIR)/$(Target) $(Target)
 
 docs: 
-	@echo "Generating documentation"
 	@doxygen Doxyfile
 	
 $(OBJECTS):	$(OBJDIR)/%.o : $(SRCDIR)/%.cpp $(HEADERS) | $(OBJDIR)
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
-	@echo "Sources: $<" 
-	@echo "Compiling files {$<} to {$@}"
-	@echo "Compiled {$<} succesfully!"
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
@@ -50,13 +46,12 @@ $(BINDIR):
 clean: clean_proj #clean_txt clean_docs
 
 clean_proj:
-	@$(RM) -f $(OBJDIR)/*			# Removes all objects on $(OBJDIR)
-	@$(RM) -f $(BINDIR)/*			# Removes the binary file
-	@$(RM) $(Target)				# Removes the symlink
-	@echo "Cleanup done!"			# Simple debug text
+	$(RM) -f $(OBJDIR)/*
+	$(RM) -f $(BINDIR)/*
+	$(RM) $(Target)	
 
 clean_txt: $(TEXT)
-	@$(RM) -f $(TEXT)				# Removes all TXT files
+	$(RM) -f $(TEXT)	
 
 clean_docs: $(DOCS)
-	@$(RM) -rf $(DOCS)				# Removes all Doc generated files
+	$(RM) -rf $(DOCS)

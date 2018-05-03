@@ -361,6 +361,13 @@ int main( void ){
 			for( sc::Vector<int>::iterator it = V.begin(); it != V.end(); ++it ){
 				std::cout << *it << ' ';
 			}
+
+			std::cout << std::endl;
+			std::cout << "\nConst print: (if we try to change a value, it get's ";
+			std::cout << "a compilation error)\n";
+			for( sc::Vector<int>::const_iterator it = V.cbegin(); it != V.cend(); ++it ){
+				std::cout << *it << ' ';
+			}
 			std::cout << std::endl;
 		}
 

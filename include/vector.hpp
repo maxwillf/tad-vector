@@ -6,15 +6,16 @@
 #include <algorithm>
 #include <iterator> //for std::distance
 #include <stdexcept>
+
 /*!
- * \file vector.hpp
- * \author Felipe Ramos & Max William
+ *	\file	vector.hpp
+ *	\author	Felipe Ramos & Max William
  */
 
 using size_type = size_t; 
 
 /*!
- * \brief A class that stores all vector functions
+ *	\brief	A class that stores all vector functions
  */
 
 namespace sc

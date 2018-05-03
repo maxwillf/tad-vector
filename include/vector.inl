@@ -585,7 +585,7 @@ namespace sc
 	 */
 	template <class T>
 	typename Vector<T>::const_iterator Vector<T>::cbegin() const{
-		return Vector<T>::iterator(this->m_first);
+		return Vector<T>::const_iterator(this->m_first);
 	}
 
 	/*!
@@ -594,7 +594,7 @@ namespace sc
 	 */
 	template <class T>
 	typename Vector<T>::const_iterator Vector<T>::cend() const{
-		return Vector<T>::iterator(this->m_last);
+		return Vector<T>::const_iterator(this->m_last);
 	}
 	/*}}}*/
 
