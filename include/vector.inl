@@ -584,7 +584,7 @@ namespace sc
 	 * \return A constant iterator to the first element of the vector.
 	 */
 	template <class T>
-	typename Vector<T>::iterator Vector<T>::cbegin() const{
+	typename Vector<T>::const_iterator Vector<T>::cbegin() const{
 		return Vector<T>::iterator(this->m_first);
 	}
 
@@ -593,7 +593,7 @@ namespace sc
 	 * \return A constant iterator to the last element of the vector.
 	 */
 	template <class T>
-	typename Vector<T>::iterator Vector<T>::cend() const{
+	typename Vector<T>::const_iterator Vector<T>::cend() const{
 		return Vector<T>::iterator(this->m_last);
 	}
 	/*}}}*/
@@ -721,6 +721,135 @@ namespace sc
 	 */
 	template <class T>
 	typename Vector<T>::iterator Vector<T>::iterator::operator--( int ){
+		// it--
+		return this->m_ptr--;
+	}
+
+	/*}}}*/
+
+	/* Const_Iterator Implementation {{{*/
+
+	/*!
+	 * \brief default const_iterator class constructor
+	 * \param T *ptr : A pointer from any type that will be stored inside the
+	 * iterator.
+	 */
+	template <class T>
+	Vector<T>::const_iterator::const_iterator( T *ptr ){
+		this->m_ptr = ptr;
+	}
+
+	/*!
+	 * \brief Alternative constructor, that recieves another const_iterator.
+	 * \param const Vector<U>::const_iterator &itr : Another const_iterator from Vector<U>.
+	 */
+	template <class U>
+	Vector<U>::const_iterator::const_iterator( const Vector<U>::const_iterator &itr ){
+		this->m_ptr = itr.m_ptr;
+		std::cout << "Vector<U>::const_iterator::const_iterator( itr ) created.\n";
+	}
+
+	/*!
+	 * \brief Default const_iterator destructor
+	 */
+	template <class U>
+	Vector<U>::const_iterator::~const_iterator() = default;
+
+	/*!
+	 * \brief Operator `=` overload function
+	 * \param const Vector::const_iterator &rhs : Right hand side of the `=` sign.
+	 */
+	template <class T>
+	typename Vector<T>::const_iterator &Vector<T>::const_iterator::operator=(
+			const Vector::const_iterator &rhs )
+	{
+		this->m_ptr = rhs.m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `==` overload function
+	 * \param const Vector::const_iterator &rhs : Right hand side of the `==` sign.
+	 */
+	template <class T>
+	bool Vector<T>::const_iterator::operator==( const Vector::const_iterator &rhs ) const{
+		return this->m_ptr == rhs.m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `!=` overload function
+	 * \param const Vector::const_iterator &rhs : Right hand side of the `!=` sign.
+	 */
+	template <class T>
+	bool Vector<T>::const_iterator::operator!=( const Vector::const_iterator &rhs ) const{
+		return this->m_ptr != rhs.m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `*` overload function
+	 */
+	template <class T>
+	const T &Vector<T>::const_iterator::operator*( void ) const{
+		return *this->m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `++` overload function
+	 */
+	template <class T>
+	typename Vector<T>::const_iterator Vector<T>::const_iterator::operator++( void ){
+		// ++it
+		return ++this->m_ptr;
+	}
+	/*!
+	 * \brief Operator `-` overload function
+	 */
+	template <class T>
+	typename Vector<T>::const_iterator Vector<T>::const_iterator::operator-(int a ){
+		// ++it
+		return this->m_ptr-a;
+	}
+
+	/*!
+	 * \brief Operator `-` overload function for ptr_diff
+	 */
+	template <class T>
+	int Vector<T>::const_iterator::operator-(const_iterator rhs ){
+		return this->m_ptr-rhs.m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `+` overload function
+	 */
+	template <class T>
+	typename Vector<T>::const_iterator Vector<T>::const_iterator::operator+(int a ){
+		// ++it
+		return this->m_ptr+a;
+	}
+	/*!
+	 * \brief Operator `++` overload function
+	 * \param int : The object itself
+	 */
+	template <class T>
+	typename Vector<T>::const_iterator Vector<T>::const_iterator::operator++( int ){
+		// it++
+		return this->m_ptr++;
+	}
+
+	/*!
+	 * \brief Operator `--` overload function
+	 */
+	template <class T>
+	typename Vector<T>::const_iterator Vector<T>::const_iterator::operator--( void ){
+		// --it
+		return --this->m_ptr;
+	}
+
+	/*!
+	 * \brief Operator `--` overload function
+	 * \param int : The object itself
+	 */
+	template <class T>
+	typename Vector<T>::const_iterator Vector<T>::const_iterator::operator--( int ){
 		// it--
 		return this->m_ptr--;
 	}
