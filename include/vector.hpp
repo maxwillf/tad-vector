@@ -22,7 +22,6 @@ namespace sc
 	template <class T>
 	class Vector{
 	public:
-				typedef const T* const_iterator;
 		/* Class Iterator {{{*/
 		class iterator{
 			public:
