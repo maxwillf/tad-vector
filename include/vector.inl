@@ -392,7 +392,24 @@ namespace sc
 		}
 		for (auto i(first);  i != last;++i ) {
 			*m_last++ = *i;	
+			m_size++;
 		}
+	}
+	template <typename T>
+	void Vector<T>::assign(std::initializer_list<T> ilist){
+	clear();	
+		if(m_capacity < ilist.size()){
+
+			while(m_capacity < ilist.size( ){
+				m_capacity *= 2;	
+			}
+			reserve(m_capacity);
+		}
+	
+	for (auto i(first); i < ilist.end(); ++i) {
+		*m_last++ = *i;
+		m_size++;
+	}
 	}
 	/*! Shrinks capacity in relation to the actual size of the vector */
 	template <typename T>
