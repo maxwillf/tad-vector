@@ -393,31 +393,37 @@ namespace sc
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::erase(iterator pos){
 		
-
-		for (auto i(pos); i != end(); ++i) {
-			if(i == begin()){
-				continue;
-			}
-			*(i-1) = *i;
-		}
+	int index = pos-m_first;
+	if(pos == end()-1 or pos == end()){
+		m_last--;
+		m_size--;
+		return end();
+	}
+	if(pos != begin()){
+		std::copy(elements+index+1,elements+m_size,elements+index);
 		m_size--;
 		m_last--;
-
-		return pos+1;
+	std::cout << "debug " << index-1 << std::endl;
+	return elements+index;
+	}
+	
+	else{
+		std::copy(elements+index+1,elements+m_size,elements+index);
+		m_size--;
+		m_last--;
+		return elements;
+	}
 	} 
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::erase(iterator first,iterator last){
 		
-		iterator j(first);
-		int counter = 0;
-		for (auto i(last); i != end(); ++i) {
-			*(j++) = *i;
-			counter ++;
-		}
+		int index = first-m_first;
+		int index_l = last-m_first;
+		std::copy(elements+index_l,elements+m_size,elements+index);
 		m_size -= last-first;
 		m_last -= last-first;
 
-		return first+counter;
+		return elements+index;
 	} 
 	/*}}}*/
 

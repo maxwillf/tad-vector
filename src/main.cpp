@@ -3,7 +3,6 @@
 #include <chrono>
 #include "vector.hpp"
 #include <vector>
-
 /* Client code functions {{{*/
 namespace client
 {
@@ -37,7 +36,6 @@ namespace client
 		}
 }
 /*}}}*/
-
 /* Styles functions {{{*/
 namespace h{
 	void sep( void ){
@@ -374,9 +372,13 @@ int main( void ){
 		h::sep();
 	}
 	/*}}}*/
-
 	std::cout << "\nEnd of the driver code." << std::endl;
 	std::cout << "Authors: Felipe Ramos and Max William\n" << std::endl;
-
-	return 0;
+	sc::Vector<int> Daniel = {{1,2,3,4,5,6,7,8}};
+	auto it2= Daniel.erase(Daniel.end(),Daniel.end());
+	std::cout << *it2 << std::endl;	
+	for (int i = 0; i < Daniel.size(); ++i) {
+		std::cout << Daniel[i] << std::endl;	
+	}
+	return -1;
 }
