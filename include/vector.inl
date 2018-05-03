@@ -180,7 +180,7 @@ namespace sc
 				m_capacity *= 2;	
 			}
 			T *temp_elements = new T[m_capacity];
-			std::copy( elements, m_last, temp_elements );
+			if(m_first != m_last) std::copy( elements, m_last, temp_elements );
 			delete [] elements;
 			elements = temp_elements;
 			m_first = elements;
@@ -193,14 +193,8 @@ namespace sc
 	/*! Adds an element to the back of the array */
 	template <class T>
 	void Vector<T>::push_back( const T& value ){
-		if(m_size <= 2){
-			this->reserve(2);
-			m_size += 1;
-			m_last = elements + m_size - 1;
-			*(m_last++) = value;
-		}
 		
-		else if( m_size < m_capacity ){
+		if( m_size < m_capacity ){
 			*(m_last++) = value;
 			m_size += 1;
 		} 
@@ -208,7 +202,6 @@ namespace sc
 			
 			this->reserve( m_capacity * 2 );	
 			m_size += 1;
-			m_last = elements + m_size - 1;
 			*(m_last++) = value;
 		}
 	}
@@ -366,6 +359,7 @@ namespace sc
 		m_first = elements;
 		m_last = elements;
 	}
+	/*!  Replaces the contents with count copies of value value */
 	template <typename T>
 	void Vector<T>::assign(size_type count,  const T & value){
 
@@ -377,7 +371,9 @@ namespace sc
 	m_last += count;
 	m_size += count;
 	}
-	
+	/*!  Replaces the contents
+	 * with copies of those in the range [first, last). 	
+	 * */
 	template <typename T>
 	void Vector<T>::assign(iterator first, iterator last){
 	
@@ -395,21 +391,22 @@ namespace sc
 			m_size++;
 		}
 	}
+	/*! Replaces the contents with the elements
+	 * from the initializer list ilist.
+	 * */
 	template <typename T>
 	void Vector<T>::assign(std::initializer_list<T> ilist){
-	clear();	
-		if(m_capacity < ilist.size()){
+	if(m_capacity < ilist.size()){
 
-			while(m_capacity < ilist.size( ){
+			while(m_capacity < ilist.size( )){
 				m_capacity *= 2;	
 			}
 			reserve(m_capacity);
-		}
-	
-	for (auto i(first); i < ilist.end(); ++i) {
-		*m_last++ = *i;
-		m_size++;
 	}
+	clear();	
+	m_last+= ilist.size();
+	m_size+= ilist.size();
+	std::copy(ilist.begin(),ilist.end(),elements);	
 	}
 	/*! Shrinks capacity in relation to the actual size of the vector */
 	template <typename T>
