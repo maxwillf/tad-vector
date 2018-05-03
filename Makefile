@@ -9,6 +9,7 @@ HEADERS = $(wildcard $(INCLUDES)/*)
 CXX = g++
 CXXFLAGS = -std=c++11 -g -ggdb -I $(INCLUDES)
 DOCS = html latex
+RM = -rm
 
 # Directories
 SRCDIR = src
@@ -49,12 +50,13 @@ $(BINDIR):
 clean: clean_proj #clean_txt clean_docs
 
 clean_proj:
-	@rm -rf $(OBJDIR)/*			# Removes all objects on $(OBJDIR)
-	@rm -rf $(BINDIR)/*			# Removes the binary file
-	@rm $(Target)				# Removes the symlink
-	@echo "Cleanup done!"		# Simple debug text
+	@$(RM) -f $(OBJDIR)/*			# Removes all objects on $(OBJDIR)
+	@$(RM) -f $(BINDIR)/*			# Removes the binary file
+	@$(RM) $(Target)				# Removes the symlink
+	@echo "Cleanup done!"			# Simple debug text
+
 clean_txt: $(TEXT)
-	@rm -f $(TEXT)				# Removes all TXT files
+	@$(RM) -f $(TEXT)				# Removes all TXT files
 
 clean_docs: $(DOCS)
-	@rm -r $(DOCS)				# Removes all Doc generated files
+	@$(RM) -rf $(DOCS)				# Removes all Doc generated files
