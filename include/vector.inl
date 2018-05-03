@@ -152,6 +152,11 @@ namespace sc
 	/*}}}*/
 
 	/* Capacity Methods {{{*/
+	template <class T>
+	bool Vector<T>::empty(){
+		return (m_size == 0 ? true : false);
+	}
+
 	/*! Returns the amount of elements in the vector */
 	template <class T>
 	size_type Vector<T>::size() const {
@@ -171,7 +176,7 @@ namespace sc
 	template <class T>
 	void Vector<T>::reserve(size_type new_cap){
 		if( new_cap > m_capacity ){
-			m_capacity = new_cap;
+			m_capacity = 2 * this->capacity(); 		// double the actual cap
 			T *temp_elements = new T[m_capacity];
 			std::copy( elements, m_last, temp_elements );
 			delete [] elements;
@@ -499,7 +504,7 @@ namespace sc
 	 */
 	template <class T>
 	bool Vector<T>::operator!=( const Vector &rhs ){
-		if( this == rhs ){
+		if( *this == rhs ){
 			return false;
 		} else {
 			return true;

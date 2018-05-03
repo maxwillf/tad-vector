@@ -50,12 +50,13 @@ $(BINDIR):
 clean: clean_proj #clean_txt clean_docs
 
 clean_proj:
-	@$(RM) -r $(OBJDIR)/*			# Removes all objects on $(OBJDIR)
-	@$(RM) $(BINDIR)/*		# Removes the binary file
+	@$(RM) -f $(OBJDIR)/*			# Removes all objects on $(OBJDIR)
+	@$(RM) -f $(BINDIR)/*			# Removes the binary file
 	@$(RM) $(Target)				# Removes the symlink
-	@echo "Cleanup done!"		# Simple debug text
+	@echo "Cleanup done!"			# Simple debug text
+
 clean_txt: $(TEXT)
 	@$(RM) -f $(TEXT)				# Removes all TXT files
 
 clean_docs: $(DOCS)
-	@$(RM) -r $(DOCS)				# Removes all Doc generated files
+	@$(RM) -rf $(DOCS)				# Removes all Doc generated files
