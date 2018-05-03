@@ -176,7 +176,9 @@ namespace sc
 	template <class T>
 	void Vector<T>::reserve(size_type new_cap){
 		if( new_cap > m_capacity ){
-			m_capacity = 2 * this->capacity(); 		// double the actual cap
+			while(new_cap > m_capacity){
+				m_capacity *= 2;	
+			}
 			T *temp_elements = new T[m_capacity];
 			std::copy( elements, m_last, temp_elements );
 			delete [] elements;
