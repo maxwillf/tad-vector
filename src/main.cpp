@@ -380,5 +380,9 @@ int main( void ){
 	for (int i = 0; i < Daniel.size(); ++i) {
 		std::cout << Daniel[i] << std::endl;	
 	}
+	Daniel.assign(Daniel.begin(),Daniel.begin()+3);
+	for (auto i = Daniel.begin(); i != Daniel.end(); ++i) {
+		std::cout << *i << std::endl;
+	}
 	return -1;
 }

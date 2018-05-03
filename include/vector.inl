@@ -377,7 +377,23 @@ namespace sc
 	m_last += count;
 	m_size += count;
 	}
+	
+	template <typename T>
+	void Vector<T>::assign(iterator first, iterator last){
+	
+		int distance = last-first;
+		clear();
+		if(m_capacity < distance){
 
+			while(m_capacity < distance){
+				m_capacity *= 2;	
+			}
+			reserve(m_capacity);
+		}
+		for (auto i(first);  i != last;++i ) {
+			*m_last++ = *i;	
+		}
+	}
 	/*! Shrinks capacity in relation to the actual size of the vector */
 	template <typename T>
 	void Vector<T>::shrink_to_fit(void){
