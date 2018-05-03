@@ -21,7 +21,15 @@ namespace sc
 {
 	template <class T>
 	class Vector{
+	private:
+		T *m_first;					// an 'first' pointer
+		T *m_last;					// an 'last' pointer
+		T *elements;				// where the array will be stored
+		size_type m_size = 0;		// default empty array 
+		size_type m_capacity;		// maximum capacity of the array
+
 	public:
+
 		/* Class Iterator {{{*/
 		class iterator{
 			public:
@@ -60,22 +68,50 @@ namespace sc
 		};
 		/*}}}*/
 		
+		/* Class Const_Iterator {{{*/
+		class const_iterator{
+			public:
+				/* Public Code {{{*/
+				typedef std::ptrdiff_t difference_type;
+				typedef std::bidirectional_iterator_tag iterator_category;
+
+				// constructors
+				const_iterator( T* ptr=nullptr );
+				const_iterator( const const_iterator & );
+
+				// destructors
+				~const_iterator( void );
+				
+				// operators 
+				const_iterator &operator=( const const_iterator & );
+				const T &operator*( void ) const;
+
+				const_iterator operator++( void );		// ++it
+				const_iterator operator++( int );		// it++
+				const_iterator operator--( void );		// --it
+				const_iterator operator--( int );		// it--
+				const_iterator operator-( int ); 		// ptr-int
+				const_iterator operator+( int ); 		// ptr+int
+//
+				bool operator==( const const_iterator & ) const;
+				bool operator!=( const const_iterator & ) const;
+	
+				int operator-(const_iterator rhs ); // ptr_diff
+				
+				/*}}}*/
+			private:
+				/* Private Code {{{*/
+				T *m_ptr;
+				/*}}}*/
+		};
+		/*}}}*/
+
 		/* Iterator methods {{{*/
 		typename Vector<T>::iterator begin();
 		typename Vector<T>::iterator end();
-		typename Vector<T>::iterator cbegin() const;
-		typename Vector<T>::iterator cend() const;
+		typename Vector<T>::const_iterator cbegin() const;
+		typename Vector<T>::const_iterator cend() const;
 		/*}}}*/
-
-		private:
-
-		T *m_first;					// an 'first' pointer
-		T *m_last;					// an 'last' pointer
-		T *elements;				// where the array will be stored
-		size_type m_size = 0;		// default empty array 
-		size_type m_capacity;		// maximum capacity of the array
-
-	public:
 
 		/* Special functions {{{*/
 		Vector( void );							// Default constructor
