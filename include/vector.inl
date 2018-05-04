@@ -16,18 +16,14 @@ namespace sc
 	 */
 	template <class T>
 	Vector<T>::Vector( size_type count ){
-		int temp_capacity;
-		if( count > 2 ){
-			temp_capacity = pow( 2, int(log2(count)) );	 // 2 ^ x growth
-			if( count > temp_capacity ){
-				temp_capacity *= 2;
+		m_capacity = 2;
+		if( count >= 2 ){
+			while( count >= m_capacity){
+				m_capacity *= 2;
 			}
-		} else {
-			temp_capacity = count;
 		}
-
 		// alocating [count] elements of type T
-		this->elements = new T[temp_capacity];
+		this->elements = new T[m_capacity];
 		for( int i = 0; i < count; i++ ){
 			if(debug) elements[i] = i;			// debug inicializer
 			else elements[i] = 0;				// normal inicializer
@@ -36,7 +32,6 @@ namespace sc
 		this->m_first = elements;
 		this->m_last = elements + count;
 		this->m_size = count;
-		this->m_capacity = temp_capacity;
 
 		if(debug) std::cout << "> Vector allocated with sucess!" << std::endl;
 	}
@@ -326,9 +321,6 @@ namespace sc
 	(iterator pos,iterator first, iterator last ){
 		int distance = last-first;
 		int first_index = pos-m_first;
-		//int l_index = 
-		//if(debug) 
-		//	std::cout 
 
 		T temp[distance];	
 		int index = 0;
@@ -342,12 +334,8 @@ namespace sc
 					std::ostream_iterator<int>(std::cout ," "));
 			std::cout << "first_index : " << first_index << std::endl;
 		}
-		if(	m_size+distance >= m_capacity){
-			while(m_size+distance >= m_capacity){
-				m_capacity *= 2;
-			}
-			reserve(m_capacity);
-		}
+		reserve(m_size+distance);
+
 		std::copy(elements+first_index,
 				elements+m_size,elements+first_index+distance);
 	
@@ -376,30 +364,33 @@ namespace sc
 	(iterator pos,std::initializer_list<T> ilist){
 
 		int first_index = pos-m_first;
-		//T temp[distance];	
-		while(m_size+ilist.size() >= m_capacity){
-			this->reserve(m_capacity*2);
-		}
-		/*for (auto i(first); i != last; ++i,++index) {
-			temp[index] = *i;
-		}
-	
-		if(debug){
+		if(1){
 			std::cout << "Before : ";
-			std::copy(temp,temp+distance,
+			std::cout << "Cap : " << capacity() << std::endl;
+			std::cout << "size : " << size() << std::endl;
+			std::copy(m_first,m_last,
 					std::ostream_iterator<int>(std::cout ," "));
+			std::cout << std::endl;
 		}
-		*/
-		std::copy(elements+first_index,elements+m_size,elements+m_size);
+		
+		if(m_size+ilist.size() > m_capacity){
+				reserve(m_size+ilist.size());
+		}
+		
+		std::copy(elements+first_index,elements+m_size,
+				elements+first_index+ilist.size());
 		std::copy(ilist.begin(),ilist.end(),elements+first_index);
 	
-		if(debug) {
+		m_size += ilist.size();
+		m_last += ilist.size();
+		if(1) {
 			std::cout << "After : ";
+			std::cout << "Cap : " << capacity() << std::endl;
+			std::cout << "size : " << size() << std::endl;
 			std::copy(elements,elements+m_size,
 				std::ostream_iterator<int>(std::cout ," "));
+			std::cout << std::endl;
 		}
-		m_last += ilist.size();
-		m_size += ilist.size();
 		return elements+first_index; 
 	}
 
@@ -440,13 +431,7 @@ namespace sc
 	
 		int distance = last-first;
 		clear();
-		if(m_capacity < distance){
-
-			while(m_capacity < distance){
-				m_capacity *= 2;	
-			}
-			reserve(m_capacity);
-		}
+		reserve(distance);
 		for (auto i(first);  i != last;++i ) {
 			*m_last++ = *i;	
 			m_size++;

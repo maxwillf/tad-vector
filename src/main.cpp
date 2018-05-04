@@ -281,13 +281,13 @@ int main( void ){
 			auto it = iVec.begin();
 			int Vet[] = { 10, 3, 4, 2, 10, 11 };
 
-			iVec.insert( it, 10 );
+			iVec.insert( iVec.begin(), 10 );
 			client::print_it( iVec, ' ' );
-			iVec.insert( it, std::begin(Vet), std::end(Vet) );
+			iVec.insert( iVec.begin(), std::begin(Vet), std::end(Vet) );
 			client::print_it( iVec, ' ' );
 
-			// iVec.insert( it, { 10, 20, 30, 40, 50, 60 } );
-			// client::print_it( iVec, ' ' );
+			 iVec.insert( iVec.begin(), { 10, 20, 30, 40, 50, 60 } );
+			 client::print_it( iVec, ' ' ); 
 		}
 
 		{
@@ -313,11 +313,11 @@ int main( void ){
 			sc::Vector<int> aVec(20);
 			client::populate(aVec);
 			std::cout << "aVec elements: ";
-			client::print_it(iVec, ' ');
+			client::print_it(aVec, ' ');
 
-			std::cout << "iVec.assign(aVec.begin(), aVec.end()) = ";
-			iVec.assign(aVec.begin(), aVec.end());
-			client::print_it(iVec, ' ');
+			 std::cout << "iVec.assign(aVec.begin(), aVec.end()) = ";
+			 iVec.assign(aVec.begin(), aVec.end());
+			 client::print_it(iVec, ' ');
 
 			std::cout << "iVec.assign(5, 10) = ";
 			iVec.assign(5, 10);
@@ -434,3 +434,4 @@ int main( void ){
 	std::cout << "Authors: Felipe Ramos and Max William\n" << std::endl;
 	return -1;
 }
+
