@@ -267,16 +267,28 @@ int main( void ){
 			// Declaration
 			sc::Vector<int> iVec(10);
 			client::populate(iVec);
-			
-			// TODO
+
+			iVec.reserve(40);
+			std::cout << "iVec capacity: " << iVec.capacity() << std::endl;
+			iVec.shrink_to_fit();
+			std::cout << "iVec capacity: " << iVec.capacity() << std::endl;
 		}
 
 		{	h::h2("Assign method test");
 			// Declaration
 			sc::Vector<int> iVec(10);
 			client::populate(iVec);
-			
-			// TODO
+			std::cout << "iVec elements: ";
+			client::print_it(iVec, ' ');
+
+			sc::Vector<int> aVec(20);
+			client::populate(aVec);
+			std::cout << "aVec elements: ";
+			client::print_it(iVec, ' ');
+
+			std::cout << "iVec.assign(aVec.begin(), aVec.end()) = ";
+			iVec.assign(aVec.begin(), aVec.end());
+			client::print_it(iVec, ' ');
 
 		}
 
@@ -284,18 +296,13 @@ int main( void ){
 			// Declaration
 			sc::Vector<int> iVec(10);
 			client::populate(iVec);
-			
-			// TODO
-
-		}
-
-		{	h::h2("Erase method with iterator first / last");
-			// Declaration
-			sc::Vector<int> iVec(10);
-			client::populate(iVec);
-			
-			// TODO
-
+			std::cout << "before elements: ";
+			client::print_it(iVec, ' ');
+			sc::Vector<int>::iterator it = iVec.begin();
+			iVec.erase(it);
+			iVec.erase( iVec.begin(), iVec.end() - 3);
+			std::cout << "after elements: ";
+			client::print_it(iVec, ' ');
 		}
 		h::sep();
 	}
