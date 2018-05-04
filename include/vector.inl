@@ -291,6 +291,10 @@ namespace sc
 	(iterator pos,iterator first, iterator last ){
 		int distance = last-first;
 		int first_index = pos-m_first;
+		//int l_index = 
+		//if(debug) 
+		//	std::cout 
+
 		T temp[distance];	
 		int index = 0;
 		for (auto i(first); i != last; ++i,++index) {
@@ -301,21 +305,28 @@ namespace sc
 			std::cout << "Before : ";
 			std::copy(temp,temp+distance,
 					std::ostream_iterator<int>(std::cout ," "));
+			std::cout << "first_index : " << first_index << std::endl;
 		}
-		
-		while(m_size+distance >= m_capacity){
-			this->reserve(m_capacity*2);
-		} 
-		std::copy(elements+first_index,elements+m_size,elements+m_size);
-		std::copy(temp,temp+distance,elements+first_index);
+		if(	m_size+distance >= m_capacity){
+			while(m_size+distance >= m_capacity){
+				m_capacity *= 2;
+			}
+			reserve(m_capacity);
+		}
+		std::copy(elements+first_index,
+				elements+m_size,elements+first_index+distance);
 	
+		m_size += distance;
+		
 		if(debug) {
 			std::cout << "After : ";
 			std::copy(elements,elements+m_size,
 				std::ostream_iterator<int>(std::cout ," "));
+			std::cout << std::endl;
 		}
+		std::copy(temp,temp+distance,elements+first_index);
+		
 		m_last += distance;
-		m_size += distance;
 		return elements+first_index; 
 	}
 	template <typename T>

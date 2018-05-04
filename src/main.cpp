@@ -250,14 +250,15 @@ int main( void ){
 			sc::Vector<int> iVec(10);
 			client::populate(iVec);
 			
-			// auto it = iVec.begin();
-			// int Vet[] = { 10, 3, 4, 2, 10, 11 };
-//
-			// iVec.insert( it, 10 );
-			// client::print_it( iVec, ' ' );
-//
-			// iVec.insert( it, std::begin(Vet), std::end(Vet) );
-			// client::print_it( iVec, ' ' );
+			 auto it = iVec.begin();
+			 int Vet[] = { 10, 3, 4, 2, 10, 11 };
+
+			 iVec.insert( it, 10 );
+			 client::print_it( iVec, ' ' );
+			 std::cout << " Size " << iVec.size() << std::endl;
+			 iVec.insert( it, std::begin(Vet), std::end(Vet) );
+			 client::print_it( iVec, ' ' );
+			 std::cout << " Size " << iVec.size() << std::endl;
 //
 			// iVec.insert( it, { 10, 20, 30, 40, 50, 60 } );
 			// client::print_it( iVec, ' ' );
