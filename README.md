@@ -48,5 +48,5 @@ while on the root folder of the project.
 
 # Authorship
 All codes here we're made by Felipe Ramos and Max William, for a project on 
-the Basic Data Structure I course on UFRN. All codes here are under the MIT 
+the Basic Data Structure we course on UFRN. All codes here are under the MIT 
 License.
