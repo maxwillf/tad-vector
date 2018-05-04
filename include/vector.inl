@@ -152,18 +152,29 @@ namespace sc
 	/*}}}*/
 
 	/* Capacity Methods {{{*/
+	/*!
+	 * 	\brief	Tells if a sc::Vector is empty (0 elements)
+	 * 	\return	bool result : True if the element is empty, false otherwise	
+	 */
 	template <class T>
 	bool Vector<T>::empty(){
 		return (m_size == 0 ? true : false);
 	}
 
-	/*! Returns the amount of elements in the vector */
+	/*!
+	 * \brief	Discover how many elements the sc::Vector has
+	 * \return	size_type size : Size of elements in the sc::Vector
+	 */
 	template <class T>
 	size_type Vector<T>::size() const {
 		return this->m_size;
 	}
 
-	/*! Returns the maximum amount of elements for current allocated size */
+	/*! 
+	 * \brief	Discover what is the total capacity of the sc::Vector	
+	 * \return 	size_type capacity : maximum amount of elements for current
+	 * 			allocated size
+	 */
 	template <class T>
 	size_type Vector<T>::capacity() const{
 		return this->m_capacity;
@@ -190,7 +201,10 @@ namespace sc
 	/*}}}*/
 
 	/* Modifiers Methods {{{*/
-	/*! Adds an element to the back of the array */
+	/*!
+	 * \brief 	Insert an element in the end of the sc::Vector
+	 * \param 	const T& value : Value to be inserted on the list
+	 */
 	template <class T>
 	void Vector<T>::push_back( const T& value ){
 		
@@ -206,6 +220,10 @@ namespace sc
 		}
 	}
 	/*! Adds an element to the front of the array */
+	/*!
+	 * \brief	Insert an element in the first position in the sc::Vector
+	 * \param	const T& value : Value to be inserted on the list
+	 */
 	template <typename T>
 	void Vector<T>::push_front(const T & value){
 	
@@ -234,7 +252,9 @@ namespace sc
 			m_last++;
 		}
 	}
-	/*! Deletes first element in the array*/
+	/*!
+	 * \brief	Remove an element from the first position on the sc::Vector
+	 */
 	template <typename T>
 	void Vector<T>::pop_front(){
 
@@ -247,7 +267,9 @@ namespace sc
 			throw std::runtime_error("Don't pop an empty vector");
 		}
 	}
-	/*! Deletes last element in the array*/
+	/*!
+	 * \brief	Remove an element from the last position on the sc::Vector
+	 */
 	template <typename T>
 	void Vector<T>::pop_back(){
 
@@ -259,9 +281,15 @@ namespace sc
 			throw std::runtime_error("Don't pop an empty vector");
 		}
 	}
+
+	/*!
+	 * \brief 	Insert an defined number of terms on the sc::Vector object
+	 * \param 	iterator pos : Position to start inserting elements
+	 * \param 	const T& value : Value to be inserted
+	 */
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::insert
-	(iterator pos, const T & value){
+	(iterator pos, const T &value){
 		int distance = pos - m_first;
 
 		bool reserved = false;	
@@ -286,6 +314,13 @@ namespace sc
 		}
 		return elements+distance;
 	}
+
+	/*!
+	 * \brief 	Insert an defined number of terms on the sc::Vector object
+	 * \param 	iterator pos : Position to start inserting elements
+	 * \param 	iterator first : First iterator that will be inserted
+	 * \param 	iterator last : Last iterator that will stop the insertion
+	 */
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::insert
 	(iterator pos,iterator first, iterator last ){
@@ -318,6 +353,13 @@ namespace sc
 		m_size += distance;
 		return elements+first_index; 
 	}
+
+	/*!
+	 * \brief 	Insert an defined number of terms on the sc::Vector object
+	 * \param 	iterator pos : Position to start inserting elements
+	 * \param 	std::initializer_list<T> ilist : initializer_list object that
+	 * 			will be inserted on the sc::Vector
+	 */
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::insert
 	(iterator pos,std::initializer_list<T> ilist){
@@ -349,14 +391,22 @@ namespace sc
 		m_size += ilist.size();
 		return elements+first_index; 
 	}
-	/*! Removes all elements from the vector but leaves capacity unchanged*/
+
+	/*!
+	 * \brief 	Reset current sc::Vector object
+	 */
 	template <typename T>
 	void Vector<T>::clear(void){
 		m_size = 0;
 		m_first = elements;
 		m_last = elements;
 	}
-	/*!  Replaces the contents with count copies of value value */
+
+	/*!
+	 * \brief 	Replaces the contents with count copies of pre-defined values
+	 * \param 	size_type count : How many times the const T &value will appear
+	 * \param 	const T &value : Value that will be inserted
+	 */
 	template <typename T>
 	void Vector<T>::assign(size_type count,  const T & value){
 
@@ -368,9 +418,12 @@ namespace sc
 	m_last += count;
 	m_size += count;
 	}
-	/*!  Replaces the contents
-	 * with copies of those in the range [first, last). 	
-	 * */
+
+	/*!
+	 * \brief 	Replaces the contents with count copies of pre-defined values
+	 * \param 	iterator first : First iterator element
+	 * \param 	iterator last : Last iterator element
+	 */
 	template <typename T>
 	void Vector<T>::assign(iterator first, iterator last){
 	
@@ -388,9 +441,12 @@ namespace sc
 			m_size++;
 		}
 	}
-	/*! Replaces the contents with the elements
-	 * from the initializer list ilist.
-	 * */
+
+	/*!
+	 * \brief 	Replaces the contents with count copies of pre-defined values
+	 * \param 	std::initializer_list<T> ilist : initializer_list that will 
+	 * 			populate the sc::Vector object
+	 */
 	template <typename T>
 	void Vector<T>::assign(std::initializer_list<T> ilist){
 	if(m_capacity < ilist.size()){
@@ -405,7 +461,10 @@ namespace sc
 	m_size+= ilist.size();
 	std::copy(ilist.begin(),ilist.end(),elements);	
 	}
-	/*! Shrinks capacity in relation to the actual size of the vector */
+
+	/*!
+	 * \brief 	Resizes if needed the total capacity of a sc::Vector object
+	 */
 	template <typename T>
 	void Vector<T>::shrink_to_fit(void){
 
@@ -417,33 +476,46 @@ namespace sc
 			m_first = elements;
 			m_last = elements+m_size;
 	}
+
+	/*!
+	 * \brief 	Removes from the sc::Vector either a element or a range of
+	 * 			elements (first, last)
+	 * \param	iterator pos : The position of the element to be erased	
+	 */
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::erase(iterator pos){
+		int index = pos-m_first;
+		if(pos == end()-1 or pos == end()){
+			m_last--;
+			m_size--;
+			return end();
+		}
+		if(pos != begin()){
+			std::copy(elements+index+1,elements+m_size,elements+index);
+			m_size--;
+			m_last--;
+			std::cout << "debug " << index-1 << std::endl;
+			return elements+index;
+		}
 		
-	int index = pos-m_first;
-	if(pos == end()-1 or pos == end()){
-		m_last--;
-		m_size--;
-		return end();
-	}
-	if(pos != begin()){
-		std::copy(elements+index+1,elements+m_size,elements+index);
-		m_size--;
-		m_last--;
-	std::cout << "debug " << index-1 << std::endl;
-	return elements+index;
-	}
-	
-	else{
-		std::copy(elements+index+1,elements+m_size,elements+index);
-		m_size--;
-		m_last--;
-		return elements;
-	}
+		else{
+			std::copy(elements+index+1,elements+m_size,elements+index);
+			m_size--;
+			m_last--;
+			return elements;
+		}
 	} 
+
+
+	/*!
+	 * \brief 	Removes from the sc::Vector either a element or a range of
+	 * 			elements (first, last)
+	 * \param	iterator first : First position iterator
+	 * \param	iterator last : Last position iterator
+	 */
 	template <typename T>
-	typename Vector<T>::iterator Vector<T>::erase(iterator first,iterator last){
-		
+	typename Vector<T>::iterator Vector<T>::erase
+	( iterator first, iterator last ){
 		int index = first-m_first;
 		int index_l = last-m_first;
 		std::copy(elements+index_l,elements+m_size,elements+index);
@@ -490,9 +562,9 @@ namespace sc
 	/* Operators Overloading {{{*/
 
 	/*!
-	 * \brief sc::Vector operator `[]` overload function
-	 * \param size_type pos : The desired position to access in elements[pos].
-	 * \return The element at elements[pos].
+	 * \brief 	sc::Vector operator `[]` overload function
+	 * \param 	size_type pos : The desired position to access in elements[pos].
+	 * \return 	The element at elements[pos].
 	 */
 	template <class T>
 	T& Vector<T>::operator[]( size_type pos ){
@@ -523,9 +595,8 @@ namespace sc
 
 	/*!
 	 * \brief	sc::Vector operator '=' overload function that constructs the 
-	 * object following a std::initializer_list object.
-	 * PS: Function not working!
-	 * \param std::initializer_list ilist : Initializer list object
+	 * 			object following a std::initializer_list object.
+	 * \param 	std::initializer_list ilist : Initializer list object
 	 */
 	template <class T>
 	Vector<T> &Vector<T>::operator=( std::initializer_list<T> ilist ){
@@ -557,7 +628,7 @@ namespace sc
 	 * \brief	sc::Vector operator `==` overload function
 	 * \param	const Vector<T> &rhs : Right hand side object
 	 * \return	bool value if the two objects are equal.
-	 * (true = 1, false = 0)
+	 * 			(true = 1, false = 0)
 	 */
 	template <class T>
 	bool Vector<T>::operator==( const Vector &rhs ){
@@ -578,7 +649,7 @@ namespace sc
 	 * \brief	sc::Vector operator `!=` overload function
 	 * \param	const Vector<T> &rhs : Right hand side object
 	 * \return	bool value if the two objects are unequal.
-	 * (true = 1, false = 0)
+	 * 			(true = 1, false = 0)
 	 */
 	template <class T>
 	bool Vector<T>::operator!=( const Vector &rhs ){
@@ -634,9 +705,9 @@ namespace sc
 	/* Iterator Implementation {{{*/
 
 	/*!
-	 * \brief default iterator class constructor
-	 * \param T *ptr : A pointer from any type that will be stored inside the
-	 * iterator.
+	 * \brief 	default iterator class constructor
+	 * \param 	T *ptr : A pointer from any type that will be stored inside the
+	 * 			iterator.
 	 */
 	template <class T>
 	Vector<T>::iterator::iterator( T *ptr ){
@@ -653,7 +724,7 @@ namespace sc
 	}
 
 	/*!
-	 * \brief Default iterator destructor
+	 * \brief	Default iterator destructor
 	 */
 	template <class U>
 	Vector<U>::iterator::~iterator() = default;

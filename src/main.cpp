@@ -245,7 +245,6 @@ int main( void ){
 
 		{
 			h::h2("Push_front & push_back method test");
-			// Declaration
 			sc::Vector<int> pVec = {2, 3, 4};
 			std::cout << "Vector pVec elements: ";
 			client::print_it(pVec, ' ');
@@ -431,6 +430,7 @@ int main( void ){
 		h::sep();
 	}
 	/*}}}*/
+
 	std::cout << "\nEnd of the driver code." << std::endl;
 	std::cout << "Authors: Felipe Ramos and Max William\n" << std::endl;
 	return -1;
