@@ -262,15 +262,15 @@ namespace sc
 	template <typename T>
 	typename Vector<T>::iterator Vector<T>::insert
 	(iterator pos, const T & value){
-		
-		int distance = pos-m_first;
+		int distance = pos - m_first;
+
 		bool reserved = false;	
 		if(++m_size >= m_capacity){
 			this->reserve(m_capacity*2);
 			reserved = true;
 		}
 		
-		if(debug)	std::cout << "Distance: " << distance << std::endl;
+		if(debug) std::cout << "Distance: " << distance << std::endl;
 
 		if(distance == m_size)
 		{
@@ -281,9 +281,6 @@ namespace sc
 		else{
 			T temp;
 			std::copy(elements+distance,elements+m_size,elements+distance+1);
-		/*	for (auto i(end()); i != pos; i--) {
-				*i = *(i-1);	
-			} */
 			*(elements+distance) = value;
 			if(!reserved) m_last++;
 		}
@@ -653,7 +650,6 @@ namespace sc
 	template <class U>
 	Vector<U>::iterator::iterator( const Vector<U>::iterator &itr ){
 		this->m_ptr = itr.m_ptr;
-		std::cout << "Vector<U>::iterator::iterator( itr ) created.\n";
 	}
 
 	/*!

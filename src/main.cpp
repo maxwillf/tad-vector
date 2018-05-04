@@ -3,6 +3,7 @@
 #include <chrono>
 #include "vector.hpp"
 #include <vector>
+
 /* Client code functions {{{*/
 namespace client
 {
@@ -36,6 +37,7 @@ namespace client
 		}
 }
 /*}}}*/
+
 /* Styles functions {{{*/
 namespace h{
 	void sep( void ){
@@ -243,11 +245,22 @@ int main( void ){
 		}
 
 		{	h::h2("Insert methods test");
+
 			// Declaration
 			sc::Vector<int> iVec(10);
 			client::populate(iVec);
 			
-			// TODO
+			// auto it = iVec.begin();
+			// int Vet[] = { 10, 3, 4, 2, 10, 11 };
+//
+			// iVec.insert( it, 10 );
+			// client::print_it( iVec, ' ' );
+//
+			// iVec.insert( it, std::begin(Vet), std::end(Vet) );
+			// client::print_it( iVec, ' ' );
+//
+			// iVec.insert( it, { 10, 20, 30, 40, 50, 60 } );
+			// client::print_it( iVec, ' ' );
 		}
 
 		{	h::h2("Shrink_to_fit method test");
