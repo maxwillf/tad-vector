@@ -2,13 +2,20 @@
 #include <random>
 #include <chrono>
 #include "vector.hpp"
-#include <vector>
+
+/*!
+ * 	\file	main.cpp
+ * 	\author Felipe Ramos & Max William
+ */
 
 /* Client code functions {{{*/
 namespace client
 {
-	// Here, all the client-side functions are defined
-	// Simple array printer
+	/*!
+	 * 	\brief 	Prints the desired sc::Vector object on the std::cout
+	 * 	\param	sc::Vector<T> &V : The Vector object that will be printed
+	 * 	\param 	char sep : desired separator char, ex: ' ' (whitespace)
+	 */
 	template <class T>
 		void print_it( sc::Vector<T> &V, char sep ){
 			for( auto it = V.begin(); it != V.end(); ++it ){
@@ -17,15 +24,12 @@ namespace client
 			std::cout << std::endl;
 		}
 
-	template <class T>
-		void print_it_vec( std::vector<T> &V, char sep ){
-			for( auto it = V.begin(); it != V.end(); ++it ){
-				std::cout << *it << sep;
-			}
-			std::cout << std::endl;
-		}
-
 	// Populate a given array with random values between [0, 1000)
+	/*!
+	 * 	\brief 	Populates a given sc::Vector object with random values between
+	 * 			0 and 1000
+	 * 	\param	sc::Vector<T> &V : sc::Vector object that will be populated
+	 */
 	template <class T>
 		void populate( sc::Vector<T> &V ){
 			for( auto it = V.begin(); it != V.end(); ++it ){
@@ -40,6 +44,9 @@ namespace client
 
 /* Styles functions {{{*/
 namespace h{
+	/*!
+	 *	\brief	Prints a separator string on std::cout
+	 */
 	void sep( void ){
 		std::cout << "\e[2m";
 		for( int i = 0; i < 80; i++ )
@@ -48,12 +55,20 @@ namespace h{
 		std::cout << std::endl;
 	}
 
+	/*!
+	 * 	\brief 	Prints a defined phrase with H1 pre-defined styling
+	 * 	\param 	std::string phrase : Phrase to print with style
+	 */
 	void h1(std::string phrase){
 		std::cout << "\e[36;4;1m";
 		std::cout << "~ " << phrase;
 		std::cout << "\e[0m" << std::endl;
 	}
 	
+	/*!
+	 * 	\brief 	Prints a defined phrase with H2 pre-defined styling
+	 * 	\param 	std::string phrase : Phrase to print with style
+	 */
 	void h2(std::string phrase){
 		std::cout << "\e[1m";
 		std::cout << "\n> ";
@@ -69,7 +84,8 @@ int main( void ){
 	{
 		h::h1("Special members tests");
 
-		{	h::h2("Empty constructor");
+		{
+			h::h2("Empty constructor");
 			
 			// Declaration
 			sc::Vector<int> EmptyVector; 
@@ -85,7 +101,8 @@ int main( void ){
 			client::print_it(EmptyVector, ' ');
 		}
 
-		{	h::h2("Constructor with pre-defined size");
+		{
+			h::h2("Constructor with pre-defined size");
 
 			// Declaration
 			sc::Vector<int> SizeVector(10);
@@ -100,7 +117,8 @@ int main( void ){
 			client::print_it( SizeVector, ' ' );
 		}
 
-		{	h::h2("Copy constructor from a simple array");
+		{
+			h::h2("Copy constructor from a simple array");
 
 			// Declaration
 			int Vet[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -111,7 +129,8 @@ int main( void ){
 			client::print_it( cVector, ' ' );
 		}
 		
-		{	h::h2("Copy constructor from another sc::Vector");
+		{
+			h::h2("Copy constructor from another sc::Vector");
 
 			// Declaration
 			sc::Vector<int> origVec(10);
@@ -123,7 +142,8 @@ int main( void ){
 			client::print_it( copyVec, ' ' );
 		}
 
-		{	h::h2("Object construtor by std::initializer");
+		{
+			h::h2("Object construtor by std::initializer");
 			
 			// Declaration
 			sc::Vector<int> initVec = { 1, 4, 3, 2, 5, 9, 10 };
@@ -133,7 +153,8 @@ int main( void ){
 			client::print_it(initVec, ' ');
 		}
 
-		{	h::h2("Vector destructor");
+		{
+			h::h2("Vector destructor");
 			// Declaration
 			sc::Vector<int> *V = new sc::Vector<int>;
 			std::cout << "Vector allocated on " << V << std::endl;
@@ -149,7 +170,8 @@ int main( void ){
 	/* Capacity functions tests {{{*/
 	{
 		h::h1("Capacity functions tests");
-		{	h::h2("Empty method test");
+		{
+			h::h2("Empty method test");
 			// Declaration
 			sc::Vector<int> V(10);
 			client::populate(V);
@@ -164,7 +186,8 @@ int main( void ){
 			std::cout << ( V_emp.empty() ? "Yes\n" : "No\n" );
 		}
 
-		{	h::h2("Size method test");
+		{
+			h::h2("Size method test");
 			// declaration
 			sc::Vector<int> V(10);
 			std::cout << "Vector V created\n";
@@ -177,7 +200,8 @@ int main( void ){
 			std::cout << "Vector V2 has " << V2.size() << " elements\n";
 		}
 		
-		{	h::h2("Capacity method test");
+		{
+			h::h2("Capacity method test");
 			// declaration
 			sc::Vector<int> V(20);	// this should give a capacity of 2^5
 			std::cout << "Vector V created with 20 elements\n";
@@ -185,7 +209,8 @@ int main( void ){
 			std::cout << "Capacity: " << V.capacity() << std::endl;
 		}
 
-		{	h::h2("Reserve method test");
+		{
+			h::h2("Reserve method test");
 			// declaration
 			sc::Vector<int> V(20);
 			std::cout << "Vector V created with 20 elements at ";
@@ -204,7 +229,8 @@ int main( void ){
 	{
 		h::h1("Modifiers functions tests");
 
-		{	h::h2("Clear method test");
+		{
+			h::h2("Clear method test");
 			// Declaration
 			sc::Vector<int> cVec(10);
 			client::populate(cVec);
@@ -217,7 +243,8 @@ int main( void ){
 			std::cout << "cVec.size() = " << cVec.size() << std::endl;
 		}
 
-		{	h::h2("Push_front & push_back method test");
+		{
+			h::h2("Push_front & push_back method test");
 			// Declaration
 			sc::Vector<int> pVec = {2, 3, 4};
 			std::cout << "Vector pVec elements: ";
@@ -231,7 +258,8 @@ int main( void ){
 
 		}
 
-		{	h::h2("Pop_front & pop_backmethod test");
+		{
+			h::h2("Pop_front & pop_backmethod test");
 			// Declaration
 			sc::Vector<int> pVec = { 2, 2, 2 };
 			std::cout << "Vector pVec elements: ";
@@ -244,7 +272,8 @@ int main( void ){
 			client::print_it(pVec, ' ');
 		}
 
-		{	h::h2("Insert methods test");
+		{
+			h::h2("Insert methods test");
 
 			// Declaration
 			sc::Vector<int> iVec(10);
@@ -263,7 +292,8 @@ int main( void ){
 			// client::print_it( iVec, ' ' );
 		}
 
-		{	h::h2("Shrink_to_fit method test");
+		{
+			h::h2("Shrink_to_fit method test");
 			// Declaration
 			sc::Vector<int> iVec(10);
 			client::populate(iVec);
@@ -274,8 +304,9 @@ int main( void ){
 			std::cout << "iVec capacity: " << iVec.capacity() << std::endl;
 		}
 
-		{	h::h2("Assign method test");
-			// Declaration
+		{
+			h::h2("Assign method test");
+
 			sc::Vector<int> iVec(10);
 			client::populate(iVec);
 			std::cout << "iVec elements: ";
@@ -290,10 +321,17 @@ int main( void ){
 			iVec.assign(aVec.begin(), aVec.end());
 			client::print_it(iVec, ' ');
 
+			std::cout << "iVec.assign(5, 10) = ";
+			iVec.assign(5, 10);
+			client::print_it(iVec, ' ');
+
+			std::cout << "iVec.assign({ 3, 4, 5, 6, 7, 8 }) = ";
+			iVec.assign({ 3, 4, 5, 6, 7, 8 });
+			client::print_it(iVec, ' ');
 		}
 
-		{	h::h2("Erase method with iterator");
-			// Declaration
+		{
+			h::h2("Erase method with iterator");
 			sc::Vector<int> iVec(10);
 			client::populate(iVec);
 			std::cout << "before elements: ";
@@ -312,7 +350,8 @@ int main( void ){
 	{
 		h::h1("Element access functions tests");
 		
-		{	h::h2("Front, back and at method test");
+		{
+			h::h2("Front, back and at method test");
 			sc::Vector<int> Vec(10);
 			client::populate(Vec);
 			std::cout << "Vec elements: ";
